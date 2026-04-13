@@ -75,6 +75,22 @@ Expected output:
 15
 ```
 
+Quick smoke test script:
+
+```bash
+./test_hello.sh
+```
+
+This compiles `examples/hello.pas`, runs it, and prints `42`.
+
+## Runtime build behavior
+
+- No separate runtime setup/build step is required.
+- `swipl -q -s pascal_compiler.pl -- build <source.pas> <out_binary>` automatically compiles and links:
+  - generated C for your Pascal program
+  - `runtime/runtime.c`
+- If you use `-- c` (C emission only), you must compile manually and include `runtime/runtime.c`.
+
 ## Notes
 
 - Direct assembly generation is feasible, but this first backend targets C for faster correctness and easier runtime integration.
