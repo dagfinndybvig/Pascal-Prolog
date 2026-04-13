@@ -52,7 +52,8 @@ Use a staged compiler pipeline: **Lexer/Parser (DCG) -> Typed AST -> IR -> backe
    - Implement I/O/runtime helpers and link into builds.
 7. **Tooling** ✅
    - CLI command: parse-only, type-check-only, compile.
-   - Add sample programs and comprehensive test suite (10 functional + 3 error tests).
+   - Add sample programs and comprehensive test suite (11 functional + 3 error tests).
+   - Robust test runner script that works from both project root and test directory.
 8. **Backend v2 (optional direct assembly)** ⏳
    - Emit x86-64 System V assembly from IR.
    - Keep runtime ABI stable and reuse runtime helpers.
@@ -77,9 +78,32 @@ Use a staged compiler pipeline: **Lexer/Parser (DCG) -> Typed AST -> IR -> backe
 
 ## Current status
 - End-to-end compile path is in place for the v1 subset: Pascal -> Prolog frontend/semantics/IR -> C -> GCC binary.
-- Runtime I/O is wired (`readln`, `writeln(expr)`, and `writeln('...')` for string literals only).
-- Comprehensive test suite implemented with 10 functional tests and 3 error case tests in `test/` directory.
+- Runtime I/O is wired (`readln`, `write(expr)`, `write('...')`, `writeln(expr)`, and `writeln('...')` for string literals only).
+- Comprehensive test suite implemented with 11 functional tests and 3 error case tests in `test/` directory.
 - Optional assembly backend remains as a next step.
+
+## Lessons learned and implementation notes
+
+### Compiler architecture insights
+1. **Modular design pays off**: The clear separation between lexer, parser, semantics, IR, and codegen made adding `write` statements straightforward - each layer required minimal, focused changes.
+
+2. **Test-driven development value**: The existing test suite made it easy to verify that adding `write` didn't break any existing functionality.
+
+3. **Runtime ABI stability**: When adding new runtime functions (`rt_write_int`, `rt_write_str`), maintaining the same calling conventions as existing functions ensured seamless integration.
+
+### Implementation patterns that worked well
+1. **Symmetry with existing features**: Mirroring the `writeln` implementation for `write` (same parsing structure, similar IR nodes, analogous runtime functions) minimized complexity.
+
+2. **Incremental testing**: Starting with minimal test cases (`write(42)`) before complex scenarios helped isolate issues quickly.
+
+3. **Error handling consistency**: Following the existing error handling patterns in semantics.pl ensured uniform behavior.
+
+### Potential future considerations
+1. **Assembly backend readiness**: The runtime ABI is now more comprehensive with both `write` and `writeln` functions, making the assembly backend more valuable.
+
+2. **Feature parity**: Future features (procedures, arrays) should follow the same modular pattern: lexer → parser → semantics → IR → codegen → runtime.
+
+3. **Performance optimization**: The current C backend could benefit from buffering output for frequent `write` calls, but this is better addressed in a future assembly backend.
 
 ## Notes and constraints
 - Favor explicit error reporting over permissive parsing.
