@@ -3,5 +3,6 @@
 
 int rt_readln_int(void);
 void rt_writeln_int(int value);
+void rt_writeln_str(const char *value);
 
 #endif

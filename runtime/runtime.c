@@ -15,3 +15,7 @@ int rt_readln_int(void) {
 void rt_writeln_int(int value) {
     printf("%d\n", value);
 }
+
+void rt_writeln_str(const char *value) {
+    printf("%s\n", value);
+}

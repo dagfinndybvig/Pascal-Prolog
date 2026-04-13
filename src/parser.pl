@@ -89,10 +89,10 @@ statement(while(Cond, Body)) -->
     keyword(do),
     statement(Body),
     !.
-statement(writeln(Expr)) -->
+statement(writeln(Arg)) -->
     keyword(writeln),
     symbol('('),
-    expression(Expr),
+    writeln_arg(Arg),
     symbol(')'),
     !.
 statement(readln(Name)) -->
@@ -183,6 +183,12 @@ primary(Expr) -->
     expression(Expr),
     symbol(')').
 
+writeln_arg(str(Text)) -->
+    string_literal(Text),
+    !.
+writeln_arg(expr(Expr)) -->
+    expression(Expr).
+
 keyword(K) -->
     [tok(kw(K), _, _)].
 
@@ -191,5 +197,8 @@ identifier(Name) -->
 
 symbol(S) -->
     [tok(sym(S), _, _)].
+
+string_literal(Text) -->
+    [tok(str(Text), _, _)].
 
 peek_keyword(K, [tok(kw(K), _, _)|Tokens], [tok(kw(K), _, _)|Tokens]).

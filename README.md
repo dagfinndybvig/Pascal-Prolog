@@ -14,7 +14,8 @@ Current v1 subset:
 - integer variables
 - assignment
 - `if` / `while`
-- `writeln(expr)` and `readln(var)`
+- `writeln(expr)`, `writeln('string literal')`, and `readln(var)`
+- **restriction:** string support is output-only literals in `writeln`; no string variables, string types, or string expressions
 
 Compilation pipeline:
 1. Lex/parse Pascal source to AST
@@ -71,6 +72,7 @@ Flag notes:
 Expected output:
 
 ```text
+The answer is:
 42
 ```
 
@@ -93,7 +95,12 @@ Quick smoke test script:
 ./test_hello.sh
 ```
 
-This compiles `examples/hello.pas`, runs it, and prints `42`.
+This compiles `examples/hello.pas`, runs it, and prints:
+
+```text
+The answer is:
+42
+```
 
 ## Runtime build behavior
 
@@ -117,10 +124,11 @@ This compiles `examples/hello.pas`, runs it, and prints `42`.
 - Assignment: `x := expr`
 - Control flow: `if ... then ... else ...`, `while ... do ...`
 - I/O: `writeln(expr)`, `readln(variable)`
+- String literal output: `writeln('...')` (literals only, no string variables)
 - Integer arithmetic: `+`, `-`, `*`, `/`
 - Relational operators: `=`, `<>`, `<`, `<=`, `>`, `>=`
 
-Not implemented yet: procedures/functions, arrays, records, strings, and direct assembly backend.
+Not implemented yet: procedures/functions, arrays, records, string variables/types/expressions, and direct assembly backend.
 
 ## License
 

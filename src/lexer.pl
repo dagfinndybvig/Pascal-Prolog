@@ -21,6 +21,12 @@ lex_codes([C|Cs], Line, Col, Tokens) :-
     ;   C =:= 0'/, Cs = [0'/|Tail]
     ->  skip_line_comment(Tail, Line, Col, Rest, NextLine, NextCol),
         lex_codes(Rest, NextLine, NextCol, Tokens)
+    ;   C =:= 0''
+    ->  consume_string_literal(Cs, Rest, StringCodes, Used),
+        string_codes(Text, StringCodes),
+        Tokens = [tok(str(Text), Line, Col)|More],
+        NextCol is Col + 1 + Used,
+        lex_codes(Rest, Line, NextCol, More)
     ;   ident_start(C)
     ->  consume_ident(Cs, Rest, IdentCodes),
         atom_codes(Atom0, [C|IdentCodes]),
@@ -63,6 +69,20 @@ skip_line_comment([0'\n|Rest], Line, _, Rest, NextLine, 1) :-
 skip_line_comment([_|Cs], Line, Col, Rest, NextLine, NextCol) :-
     Col1 is Col + 1,
     skip_line_comment(Cs, Line, Col1, Rest, NextLine, NextCol).
+
+consume_string_literal([], _, _, _) :-
+    throw(error(syntax_error(unclosed_string_literal), _)).
+consume_string_literal([0'\n|_], _, _, _) :-
+    throw(error(syntax_error(newline_in_string_literal), _)).
+consume_string_literal([0''', 0'''|Cs], Rest, [0'''|More], Used) :-
+    !,
+    consume_string_literal(Cs, Rest, More, Used0),
+    Used is Used0 + 2.
+consume_string_literal([0'''|Rest], Rest, [], 1) :-
+    !.
+consume_string_literal([C|Cs], Rest, [C|More], Used) :-
+    consume_string_literal(Cs, Rest, More, Used0),
+    Used is Used0 + 1.
 
 ident_start(C) :-
     code_type(C, alpha)

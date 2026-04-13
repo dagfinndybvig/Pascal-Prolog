@@ -47,10 +47,14 @@ stmt_lines(ir_assign(Name, Expr), Level, [Line]) :-
     expr_text(Expr, ExprText),
     indent(Level, Indent),
     format(atom(Line), "~w~w = ~w;", [Indent, Name, ExprText]).
-stmt_lines(ir_writeln(Expr), Level, [Line]) :-
+stmt_lines(ir_writeln_int(Expr), Level, [Line]) :-
     expr_text(Expr, ExprText),
     indent(Level, Indent),
     format(atom(Line), "~wrt_writeln_int(~w);", [Indent, ExprText]).
+stmt_lines(ir_writeln_str(Text), Level, [Line]) :-
+    c_string_literal(Text, StringLiteral),
+    indent(Level, Indent),
+    format(atom(Line), "~wrt_writeln_str(~w);", [Indent, StringLiteral]).
 stmt_lines(ir_readln(Name), Level, [Line]) :-
     indent(Level, Indent),
     format(atom(Line), "~w~w = rt_readln_int();", [Indent, Name]).
@@ -101,6 +105,22 @@ c_operator('+', "+").
 c_operator('-', "-").
 c_operator('*', "*").
 c_operator('/', "/").
+
+c_string_literal(Text, Literal) :-
+    string_codes(Text, Codes),
+    escape_c_string_codes(Codes, EscapedCodes),
+    atom_codes(EscapedAtom, EscapedCodes),
+    format(atom(Literal), "\"~w\"", [EscapedAtom]).
+
+escape_c_string_codes([], []).
+escape_c_string_codes([0'\\|Rest], [0'\\, 0'\\|EscapedRest]) :-
+    !,
+    escape_c_string_codes(Rest, EscapedRest).
+escape_c_string_codes([0'"|Rest], [0'\\, 0'"|EscapedRest]) :-
+    !,
+    escape_c_string_codes(Rest, EscapedRest).
+escape_c_string_codes([Code|Rest], [Code|EscapedRest]) :-
+    escape_c_string_codes(Rest, EscapedRest).
 
 indent(Level, Indent) :-
     Spaces is Level * 4,

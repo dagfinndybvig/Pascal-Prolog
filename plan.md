@@ -25,7 +25,8 @@ Use a staged compiler pipeline: **Lexer/Parser (DCG) -> Typed AST -> IR -> backe
 
 ## Runtime and I/O strategy
 - Implement a tiny runtime shim (initially in C, later optionally in assembly) exposing:
-  - integer output (`writeln` subset)
+  - integer output (`writeln(expr)`)
+  - string literal output (`writeln('...')`, literals only)
   - integer input (`readln` subset)
   - process exit
 - Generated code calls runtime helpers; runtime maps to libc (`printf`, `scanf`, `putchar`, etc.).
@@ -76,7 +77,7 @@ Use a staged compiler pipeline: **Lexer/Parser (DCG) -> Typed AST -> IR -> backe
 
 ## Current status
 - End-to-end compile path is in place for the v1 subset: Pascal -> Prolog frontend/semantics/IR -> C -> GCC binary.
-- Runtime I/O is wired (`readln` and `writeln` for integers).
+- Runtime I/O is wired (`readln`, `writeln(expr)`, and `writeln('...')` for string literals only).
 - Optional assembly backend remains as a next step.
 
 ## Notes and constraints
@@ -90,7 +91,7 @@ Use a staged compiler pipeline: **Lexer/Parser (DCG) -> Typed AST -> IR -> backe
 ### What we have now
 - Integer variables, arithmetic, relational operators.
 - Assignment, `if`, `while`, `begin ... end`.
-- Basic integer I/O via `readln` and `writeln`.
+- Basic I/O via `readln`, integer `writeln(expr)`, and literal-only `writeln('...')`.
 - End-to-end build path to native executable (Pascal -> C -> GCC).
 
 ### What we still need
