@@ -56,6 +56,18 @@ swipl -q -s pascal_compiler.pl -- build examples/hello.pas hello
 ./hello
 ```
 
+What each command does:
+- `parse`: parse Pascal source and print AST.
+- `check`: parse + semantic checks (declarations/usage); prints `ok` on success.
+- `c`: compile to generated C source only.
+- `build`: full pipeline to native executable (includes runtime compilation/linking).
+- `./hello`: run the produced executable.
+
+Flag notes:
+- `-q`: quiet SWI-Prolog startup output.
+- `-s pascal_compiler.pl`: load the compiler entry script.
+- `--`: separate SWI-Prolog flags from compiler command arguments.
+
 Expected output:
 
 ```text
