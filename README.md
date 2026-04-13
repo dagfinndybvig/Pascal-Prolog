@@ -1,3 +1,5 @@
+<img width="688" height="970" alt="image" src="https://github.com/user-attachments/assets/7a41845d-e6cb-4bc1-8c44-224f0755d6ff" />
+
 # Pascal-Prolog
 
 This project bootstraps a small Pascal compiler written in SWI-Prolog.
