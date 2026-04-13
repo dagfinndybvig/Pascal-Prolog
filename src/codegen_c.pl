@@ -55,6 +55,14 @@ stmt_lines(ir_writeln_str(Text), Level, [Line]) :-
     c_string_literal(Text, StringLiteral),
     indent(Level, Indent),
     format(atom(Line), "~wrt_writeln_str(~w);", [Indent, StringLiteral]).
+stmt_lines(ir_write_int(Expr), Level, [Line]) :-
+    expr_text(Expr, ExprText),
+    indent(Level, Indent),
+    format(atom(Line), "~wrt_write_int(~w);", [Indent, ExprText]).
+stmt_lines(ir_write_str(Text), Level, [Line]) :-
+    c_string_literal(Text, StringLiteral),
+    indent(Level, Indent),
+    format(atom(Line), "~wrt_write_str(~w);", [Indent, StringLiteral]).
 stmt_lines(ir_readln(Name), Level, [Line]) :-
     indent(Level, Indent),
     format(atom(Line), "~w~w = rt_readln_int();", [Indent, Name]).

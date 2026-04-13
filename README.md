@@ -14,8 +14,8 @@ Current v1 subset:
 - integer variables
 - assignment
 - `if` / `while`
-- `writeln(expr)`, `writeln('string literal')`, and `readln(var)`
-- **restriction:** string support is output-only literals in `writeln`; no string variables, string types, or string expressions
+- `write(expr)`, `write('string literal')`, `writeln(expr)`, `writeln('string literal')`, and `readln(var)`
+- **restriction:** string support is output-only literals in `write`/`writeln`; no string variables, string types, or string expressions
 
 Compilation pipeline:
 1. Lex/parse Pascal source to AST
@@ -137,8 +137,8 @@ See `test/README.md` for detailed test coverage and instructions for adding new 
 - Statements inside `begin ... end`
 - Assignment: `x := expr`
 - Control flow: `if ... then ... else ...`, `while ... do ...`
-- I/O: `writeln(expr)`, `readln(variable)`
-- String literal output: `writeln('...')` (literals only, no string variables)
+- I/O: `write(expr)`, `write('...')`, `writeln(expr)`, `readln(variable)`
+- String literal output: `write('...')` and `writeln('...')` (literals only, no string variables)
 - Integer arithmetic: `+`, `-`, `*`, `/`
 - Relational operators: `=`, `<>`, `<`, `<=`, `>`, `>=`
 

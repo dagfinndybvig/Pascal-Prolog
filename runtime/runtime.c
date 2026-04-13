@@ -19,3 +19,11 @@ void rt_writeln_int(int value) {
 void rt_writeln_str(const char *value) {
     printf("%s\n", value);
 }
+
+void rt_write_int(int value) {
+    printf("%d", value);
+}
+
+void rt_write_str(const char *value) {
+    printf("%s", value);
+}

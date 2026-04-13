@@ -33,6 +33,9 @@ check_stmt(while(Cond, Body), Vars) :-
 check_stmt(writeln(expr(Expr)), Vars) :-
     check_expr(Expr, Vars).
 check_stmt(writeln(str(_)), _).
+check_stmt(write(expr(Expr)), Vars) :-
+    check_expr(Expr, Vars).
+check_stmt(write(str(_)), _).
 check_stmt(readln(Name), Vars) :-
     ensure_declared(Name, Vars).
 check_stmt(block(Stmts), Vars) :-

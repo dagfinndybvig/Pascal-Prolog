@@ -95,6 +95,12 @@ statement(writeln(Arg)) -->
     writeln_arg(Arg),
     symbol(')'),
     !.
+statement(write(Arg)) -->
+    keyword(write),
+    symbol('('),
+    writeln_arg(Arg),
+    symbol(')'),
+    !.
 statement(readln(Name)) -->
     keyword(readln),
     symbol('('),

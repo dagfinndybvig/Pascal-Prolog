@@ -17,6 +17,7 @@ These test cases verify that the compiler correctly handles various Pascal langu
 - **`test_relational_operators.pas`**: All relational operators (=, <>, <, <=, >, >=)
 - **`test_unary_operations.pas`**: Unary minus operations
 - **`test_complex_expression.pas`**: Complex nested expressions with parentheses
+- **`test_write_functionality.pas`**: `write` statements (without newline) and mixed `write`/`writeln` usage
 
 ### Error Case Tests
 These test cases verify that the compiler properly detects and reports errors:

@@ -15,6 +15,9 @@ lower_stmt(while(Cond, Body), ir_while(IRCond, IRBody)) :-
 lower_stmt(writeln(expr(Expr)), ir_writeln_int(IRExpr)) :-
     lower_expr(Expr, IRExpr).
 lower_stmt(writeln(str(Text)), ir_writeln_str(Text)).
+lower_stmt(write(expr(Expr)), ir_write_int(IRExpr)) :-
+    lower_expr(Expr, IRExpr).
+lower_stmt(write(str(Text)), ir_write_str(Text)).
 lower_stmt(readln(Name), ir_readln(Name)).
 lower_stmt(block(Stmts), ir_block(IRStmts)) :-
     maplist(lower_stmt, Stmts, IRStmts).

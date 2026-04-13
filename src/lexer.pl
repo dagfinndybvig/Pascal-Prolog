@@ -117,6 +117,7 @@ keyword_or_ident(else, kw(else)) :- !.
 keyword_or_ident(while, kw(while)) :- !.
 keyword_or_ident(do, kw(do)) :- !.
 keyword_or_ident(writeln, kw(writeln)) :- !.
+keyword_or_ident(write, kw(write)) :- !.
 keyword_or_ident(readln, kw(readln)) :- !.
 keyword_or_ident(Atom, ident(Atom)).
 

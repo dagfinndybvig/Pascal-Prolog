@@ -31,6 +31,7 @@ TEST_CASES=(
     "test_relational_operators:3"
     "test_unary_operations:-5|5"
     "test_complex_expression:5"
+    "test_write_functionality:x = 10|This is a test on the same line|Result: 30|Final value: 200|Done."
 )
 
 # Error case tests (should fail to compile)
