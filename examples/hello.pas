@@ -3,6 +3,6 @@ var
   x: integer;
 begin
   x := 41;
-  writeln('The answer is:');
+  writeln('Hello, the answer is: ');
   writeln(x + 1)
 end.

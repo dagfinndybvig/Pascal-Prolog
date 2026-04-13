@@ -110,6 +110,20 @@ The answer is:
   - `runtime/runtime.c`
 - If you use `-- c` (C emission only), you must compile manually and include `runtime/runtime.c`.
 
+## Testing
+
+A comprehensive test suite is available in the `test/` directory with:
+- 10 functional tests covering all major Pascal features
+- 3 error case tests for proper error detection
+- Robust test runner script that works from both project root and test directory
+
+Run all tests:
+```bash
+./test/run_tests.sh
+```
+
+See `test/README.md` for detailed test coverage and instructions for adding new tests.
+
 ## Notes
 
 - Direct assembly generation is feasible, but this first backend targets C for faster correctness and easier runtime integration.

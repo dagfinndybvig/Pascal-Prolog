@@ -1,0 +1,11 @@
+program test_control_flow;
+var
+  x, y: integer;
+begin
+  x := 10;
+  if x > 5 then
+    y := 1
+  else
+    y := 0;
+  writeln(y)
+end.

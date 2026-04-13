@@ -52,7 +52,7 @@ Use a staged compiler pipeline: **Lexer/Parser (DCG) -> Typed AST -> IR -> backe
    - Implement I/O/runtime helpers and link into builds.
 7. **Tooling** ✅
    - CLI command: parse-only, type-check-only, compile.
-   - Add sample programs and regression tests.
+   - Add sample programs and comprehensive test suite (10 functional + 3 error tests).
 8. **Backend v2 (optional direct assembly)** ⏳
    - Emit x86-64 System V assembly from IR.
    - Keep runtime ABI stable and reuse runtime helpers.
@@ -78,6 +78,7 @@ Use a staged compiler pipeline: **Lexer/Parser (DCG) -> Typed AST -> IR -> backe
 ## Current status
 - End-to-end compile path is in place for the v1 subset: Pascal -> Prolog frontend/semantics/IR -> C -> GCC binary.
 - Runtime I/O is wired (`readln`, `writeln(expr)`, and `writeln('...')` for string literals only).
+- Comprehensive test suite implemented with 10 functional tests and 3 error case tests in `test/` directory.
 - Optional assembly backend remains as a next step.
 
 ## Notes and constraints
