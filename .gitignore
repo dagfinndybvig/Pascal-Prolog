@@ -1,0 +1,10 @@
+# Pascal-Prolog local build artifacts
+*.o
+*.obj
+*.s
+*.out
+*.exe
+a.out
+
+# Generated C files from `pascal_compiler.pl -- c ...` (root-level outputs)
+/*.c

@@ -4,6 +4,12 @@
 
 This project bootstraps a small Pascal compiler written in SWI-Prolog.
 
+## Historical and pedagogical context
+
+Pascal was designed by **Niklaus Wirth** in the early 1970s as a language for clear, structured programming and computer science education. It became one of the most influential teaching languages because its syntax and type discipline make algorithms and data structures explicit and readable.
+
+This project is directly inspired by Wirth's classic book **_Algorithms + Data Structures = Programs_ (1976)**, where Pascal is used to teach the deep connection between problem-solving methods and data representation. Building a Pascal compiler in Prolog is both a historical exercise and a practical learning tool: it lets us study language implementation while reconnecting with a foundational pedagogical tradition in computer science.
+
 Current v1 subset:
 - integer variables
 - assignment
@@ -87,3 +93,7 @@ Expected output:
 - Relational operators: `=`, `<>`, `<`, `<=`, `>`, `>=`
 
 Not implemented yet: procedures/functions, arrays, records, strings, and direct assembly backend.
+
+## License
+
+Released under the **Unlicense** (public domain dedication). See `UNLICENSE`.

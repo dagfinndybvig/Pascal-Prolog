@@ -83,3 +83,25 @@ Use a staged compiler pipeline: **Lexer/Parser (DCG) -> Typed AST -> IR -> backe
 - Favor explicit error reporting over permissive parsing.
 - Keep grammar and semantic checks modular so adding features (arrays, records, procedures with params) is incremental.
 - Direct assembly remains feasible, but is best treated as a second backend after frontend/semantics are validated.
+
+## Final goal: compatibility with Wirth's *Algorithms + Data Structures = Programs*
+- We ideally want this compiler to run a substantial share of the book's Pascal examples.
+
+### What we have now
+- Integer variables, arithmetic, relational operators.
+- Assignment, `if`, `while`, `begin ... end`.
+- Basic integer I/O via `readln` and `writeln`.
+- End-to-end build path to native executable (Pascal -> C -> GCC).
+
+### What we still need
+1. Procedures/functions with parameters, lexical scope, and recursion.
+2. Arrays and indexed access (for sorting and table-based examples).
+3. Records and pointer-based dynamic structures (`new`/`dispose`) for lists/trees.
+4. Broader control-flow support (`for`, `repeat ... until`, `case`).
+5. Richer Pascal type support (booleans/enums/subranges and eventually sets/files as needed).
+6. Better diagnostics and conformance tests against representative programs from each chapter.
+
+### Practical compatibility assessment
+- **Current:** suitable for only early/basic examples.
+- **After items 1-4:** likely enough for many core algorithm/data-structure examples.
+- **After items 5-6:** realistic path to broad book-level compatibility.
