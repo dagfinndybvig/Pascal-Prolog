@@ -82,7 +82,8 @@ build_asm(SourcePath, OutputPath) :-
             close(Stream),
             write_asm_file(TempAsmPath, IRProgram),
             runtime_paths(RuntimeCPath, RuntimeIncludeDir),
-            tmp_file_stream(text, TempObjPath, _),
+            tmp_file_stream(text, TempObjPath, ObjStream),
+            close(ObjStream),
             process_create(
                 path(gcc),
                 [
@@ -112,12 +113,13 @@ build_asm(SourcePath, OutputPath) :-
     ).
 
 % Write assembly file
-write_asm_file(AsmPath, ir_program(_, _, IRStmts)) :-
+write_asm_file(AsmPath, ir_program(_, Vars, IRStmts)) :-
     open(AsmPath, write, Stream),
+    init_var_offsets(Vars),
     asm_header(Header),
     write(Stream, Header),
     (   member(IR, IRStmts),
-        generate_asm(IR, AsmCode),
+        once(generate_asm(IR, AsmCode)),
         write(Stream, AsmCode),
         fail
     ;   true
@@ -125,12 +127,12 @@ write_asm_file(AsmPath, ir_program(_, _, IRStmts)) :-
     asm_footer(FooterStart),
     write(Stream, FooterStart),
     (   member(IR, IRStmts),
-        generate_asm_text(IR, AsmCode),
+        once(generate_asm_text(IR, AsmCode)),
         write(Stream, AsmCode),
         fail
     ;   true
     ),
-    write(Stream, "\tmovq $0, %rax\n\tpopq %rbp\n\tret\n"),
+    write(Stream, "\tmovq $0, %rax\n\tleave\n\tret\n"),
     close(Stream).
 
 expect_success(exit(0)) :- !.
@@ -163,7 +165,7 @@ main :-
     ;   Argv = [asm, Source, AsmOut]
     ->  compile_to_asm(Source, AsmOut),
         format("Wrote ~w~n", [AsmOut])
-    ;   Argv = [build-asm, Source, OutBin]
+    ;   Argv = ['build-asm', Source, OutBin]
     ->  build_asm(Source, OutBin),
         format("Built ~w~n", [OutBin])
     ;   usage,

@@ -2,6 +2,19 @@
 
 This directory contains a minimal proof of concept (PoC) for the assembly backend of the Pascal-Prolog compiler. The goal is to demonstrate the feasibility of generating x86-64 assembly code from Pascal programs and building executables.
 
+## Current capability synopsis
+
+The assembly backend is now functionally complete for the project’s Step 1–5 test surface, with passing C-vs-ASM parity via `assembly/assembly-tests/test_all_steps.sh`.
+
+Supported in ASM:
+1. Integer variables, assignment, unary minus, arithmetic (`+ - * /`).
+2. Comparisons (`= <> < <= > >=`) and control flow (`if/then/else`, `while`, nested blocks).
+3. Scoped block-local `var` declarations (including shadowing).
+4. I/O: `write`/`writeln` for integers and strings, and `readln` for integer input.
+5. Robust string literal emission (deduplicated labels, escaping for quotes/backslashes/newlines).
+
+The compiler driver paths `-- asm` and `-- build-asm` are operational end-to-end.
+
 ## Overview
 
 The PoC implements a minimal assembly backend that can:

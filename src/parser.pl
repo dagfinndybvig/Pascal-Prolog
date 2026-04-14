@@ -54,10 +54,18 @@ ident_list_tail([Name|Rest]) -->
 ident_list_tail([]) -->
     [].
 
-block(block(Stmts)) -->
+block(block(LocalVars, Stmts)) -->
     keyword(begin),
+    block_declarations(LocalVars),
     stmt_list(Stmts),
     keyword(end).
+
+block_declarations(Vars) -->
+    keyword(var),
+    !,
+    var_decls(Vars).
+block_declarations([]) -->
+    [].
 
 stmt_list([]) -->
     peek_keyword(end),
@@ -117,7 +125,7 @@ optional_else(Else) -->
     keyword(else),
     !,
     statement(Else).
-optional_else(block([])) -->
+optional_else(block([], [])) -->
     [].
 
 expression(Expr) -->
