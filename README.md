@@ -21,7 +21,7 @@ Compilation pipeline:
 1. Lex/parse Pascal source to AST
 2. Run semantic checks (declarations + variable usage)
 3. Lower to a simple IR
-4. Emit C
+4. Emit C or x86-64 assembly
 5. Compile with `gcc` and link a tiny runtime for I/O
 
 ## Requirements
@@ -54,14 +54,19 @@ swipl -q -s pascal_compiler.pl -- parse examples/hello.pas
 swipl -q -s pascal_compiler.pl -- check examples/hello.pas
 swipl -q -s pascal_compiler.pl -- c examples/hello.pas hello.c
 swipl -q -s pascal_compiler.pl -- build examples/hello.pas hello
+swipl -q -s pascal_compiler.pl -- asm examples/hello.pas hello.s
+swipl -q -s pascal_compiler.pl -- build-asm examples/hello.pas hello_asm
 ./hello
+./hello_asm
 ```
 
 What each command does:
 - `parse`: parse Pascal source and print AST.
 - `check`: parse + semantic checks (declarations/usage); prints `ok` on success.
 - `c`: compile to generated C source only.
-- `build`: full pipeline to native executable (includes runtime compilation/linking).
+- `build`: full pipeline to native executable via C backend (includes runtime compilation/linking).
+- `asm`: compile to x86-64 assembly source only.
+- `build-asm`: full pipeline to native executable via assembly backend.
 - `./hello`: run the produced executable.
 
 Flag notes:
@@ -124,10 +129,23 @@ Run all tests:
 
 See `test/README.md` for detailed test coverage and instructions for adding new tests.
 
+### Assembly Backend Testing
+
+The assembly backend includes additional tests in `assembly/assembly-tests/`:
+- 5 expansion steps covering variables, arithmetic, control flow, I/O, and advanced features
+- 2 regression test cases
+- Full parity testing with C backend
+
+Run assembly tests:
+```bash
+./assembly/assembly-tests/test_all_steps.sh
+```
+
 ## Notes
 
-- Direct assembly generation is feasible, but this first backend targets C for faster correctness and easier runtime integration.
-- The runtime is in `runtime/runtime.c` and is intentionally small so an assembly backend can reuse the same ABI later.
+- The compiler now supports two backends: C (original) and x86-64 assembly (new).
+- Both backends use the same runtime ABI for full compatibility.
+- The runtime is in `runtime/runtime.c` and is intentionally small and stable.
 - Generated binaries are native Linux executables.
 
 ## Supported Pascal subset (v1)
@@ -142,7 +160,7 @@ See `test/README.md` for detailed test coverage and instructions for adding new 
 - Integer arithmetic: `+`, `-`, `*`, `/`
 - Relational operators: `=`, `<>`, `<`, `<=`, `>`, `>=`
 
-Not implemented yet: procedures/functions, arrays, records, string variables/types/expressions, and direct assembly backend.
+Not implemented yet: procedures/functions, arrays, records, string variables/types/expressions.
 
 ## License
 
