@@ -17,7 +17,8 @@ The comprehensive test program exercises all implemented Pascal features:
 7. **Nested Blocks**: Variable scoping with inner blocks
 8. **While Loops**: Looping construct with counter
 9. **String Output**: String literal output
-10. **Multiple Writeln**: Various output operations
+10. **Input Operations**: `readln` for integer input
+11. **Multiple Writeln**: Various output operations
 
 ### Program Structure:
 
@@ -131,6 +132,7 @@ The test program has been successfully compiled and executed using the assembly 
 - ✅ Nested blocks with local variables
 - ✅ While loops with compound statements
 - ✅ String literal output
+- ✅ Input operations (readln)
 - ✅ Multiple writeln statements
 
 ## Comparison with C Backend
@@ -158,6 +160,7 @@ This comprehensive test covers all features implemented in the current version:
 | Nested blocks | ✅ | ✅ |
 | While loops | ✅ | ✅ |
 | String output | ✅ | ✅ |
+| Input operations | ✅ | ✅ |
 | Writeln statements | ✅ | ✅ |
 
 The test demonstrates that the assembly backend is fully functional and produces correct results for all implemented Pascal features.

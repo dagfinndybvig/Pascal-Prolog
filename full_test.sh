@@ -19,7 +19,7 @@ echo "   ✅ Assembly compilation successful"
 
 # Run assembly version
 echo "2. Running assembly version..."
-./comprehensive_test
+echo "42" | ./comprehensive_test
 echo "   ✅ Assembly execution successful"
 
 # Compile with C backend for comparison
@@ -29,13 +29,13 @@ echo "   ✅ C compilation successful"
 
 # Run C version
 echo "4. Running C version..."
-./comprehensive_test_c
+echo "42" | ./comprehensive_test_c
 echo "   ✅ C execution successful"
 
 # Verify both produce identical output
 echo "5. Verifying output consistency..."
-ASM_OUTPUT=$(./comprehensive_test)
-C_OUTPUT=$(./comprehensive_test_c)
+ASM_OUTPUT=$(echo "42" | ./comprehensive_test)
+C_OUTPUT=$(echo "42" | ./comprehensive_test_c)
 
 if [ "$ASM_OUTPUT" = "$C_OUTPUT" ]; then
     echo "   ✅ Both backends produce identical output"
@@ -62,4 +62,5 @@ echo "  • Relational operators and conditionals"
 echo "  • Nested blocks with local variables"
 echo "  • While loops with compound statements"
 echo "  • String literal output"
+echo "  • Input operations (readln)"
 echo "  • Multiple writeln statements"

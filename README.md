@@ -137,6 +137,7 @@ This test exercises all implemented features:
 - Nested blocks with local variables
 - While loops with compound statements
 - String literal output
+- Input operations (readln)
 
 You can also compile the same program with the C backend for comparison:
 

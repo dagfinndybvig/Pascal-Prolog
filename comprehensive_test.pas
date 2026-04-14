@@ -1,7 +1,7 @@
 program comprehensive_test;
 
 var
-  a, b, c, result, temp: integer;
+  a, b, c, result, temp, user_input: integer;
 
 begin
   { Test basic arithmetic }
@@ -60,6 +60,17 @@ begin
     c := c + 1
   end;
   writeln(temp);
+  
+  { Test input operations }
+  write('Enter a number: ');
+  readln(user_input);
+  write('You entered: ');
+  writeln(user_input);
+  
+  { Use input in calculation }
+  result := user_input * 2;
+  write('Double of your input: ');
+  writeln(result);
   
   { Test string output }
   writeln('Test completed successfully!')
