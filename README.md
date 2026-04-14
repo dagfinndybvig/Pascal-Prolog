@@ -106,10 +106,10 @@ To compile and run the full comprehensive test using the assembly backend:
 
 ```bash
 # Compile comprehensive test with assembly backend
-swipl -q -s pascal_compiler.pl -- build-asm comprehensive_test.pas comprehensive_test
+swipl -q -s pascal_compiler.pl -- build-asm comprehensive_test.pas comprehensive_test_asm
 
 # Run the compiled program
-./comprehensive_test
+./comprehensive_test_asm
 ```
 
 Expected output:
@@ -125,6 +125,8 @@ Expected output:
 1
 30
 15
+Enter a number: You entered: 42
+Double of your input: 84
 Test completed successfully!
 ```
 

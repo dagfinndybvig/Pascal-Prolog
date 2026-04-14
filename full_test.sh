@@ -10,16 +10,16 @@ echo "Testing assembly backend with all implemented features"
 echo
 
 # Clean up any previous builds
-rm -f comprehensive_test comprehensive_test_c comprehensive_test.s comprehensive_test.c
+rm -f comprehensive_test_asm comprehensive_test_c comprehensive_test.s comprehensive_test.c
 
 # Compile with assembly backend
 echo "1. Compiling with assembly backend..."
-swipl -q -s pascal_compiler.pl -- build-asm comprehensive_test.pas comprehensive_test
+swipl -q -s pascal_compiler.pl -- build-asm comprehensive_test.pas comprehensive_test_asm
 echo "   ✅ Assembly compilation successful"
 
 # Run assembly version
 echo "2. Running assembly version..."
-echo "42" | ./comprehensive_test
+echo "42" | ./comprehensive_test_asm
 echo "   ✅ Assembly execution successful"
 
 # Compile with C backend for comparison
@@ -34,7 +34,7 @@ echo "   ✅ C execution successful"
 
 # Verify both produce identical output
 echo "5. Verifying output consistency..."
-ASM_OUTPUT=$(echo "42" | ./comprehensive_test)
+ASM_OUTPUT=$(echo "42" | ./comprehensive_test_asm)
 C_OUTPUT=$(echo "42" | ./comprehensive_test_c)
 
 if [ "$ASM_OUTPUT" = "$C_OUTPUT" ]; then
