@@ -100,6 +100,53 @@ Quick smoke test script:
 ./test_hello.sh
 ```
 
+## Comprehensive Test with Assembly Backend
+
+To compile and run the full comprehensive test using the assembly backend:
+
+```bash
+# Compile comprehensive test with assembly backend
+swipl -q -s pascal_compiler.pl -- build-asm comprehensive_test.pas comprehensive_test
+
+# Run the compiled program
+./comprehensive_test
+```
+
+Expected output:
+```
+30
+200
+2
+20
+-10
+20
+1
+1
+1
+30
+15
+Test completed successfully!
+```
+
+This test exercises all implemented features:
+- Variable declarations and assignments
+- Basic arithmetic operations (+, *, /)
+- Complex nested expressions
+- Unary operations (negative numbers)
+- Relational operators and conditional statements
+- Nested blocks with local variables
+- While loops with compound statements
+- String literal output
+
+You can also compile the same program with the C backend for comparison:
+
+```bash
+swipl -q -s pascal_compiler.pl -- build comprehensive_test.pas comprehensive_test_c
+./comprehensive_test_c
+```
+
+Both backends should produce identical output.
+
 This compiles `examples/hello.pas`, runs it, and prints:
 
 ```text
