@@ -1,5 +1,5 @@
 { Prime number calculator - prints all primes less than 200 }
-{ Build command: swipl -q -s pascal_compiler.pl -- build_asm primes_less_than_200_simple.pas primes_less_than_200 }
+{ Build command: swipl -q -s pascal_compiler.pl -- build-asm primes_less_than_200_simple.pas primes_less_than_200 }
 { Run command: ./primes_less_than_200 }
 
 program primes_less_than_200;
