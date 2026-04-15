@@ -26,7 +26,7 @@ The comprehensive test program exercises all implemented Pascal features:
 program comprehensive_test;
 
 var
-  a, b, c, result, temp: integer;
+  a, b, c, result, temp, user_input: integer;
 
 begin
   { Test basic arithmetic }
@@ -86,6 +86,17 @@ begin
   end;
   writeln(temp);  { Output: 15 }
   
+  { Test input operations }
+  write('Enter a number: ');
+  readln(user_input);
+  write('You entered: ');
+  writeln(user_input);
+  
+  { Use input in calculation }
+  result := user_input * 2;
+  write('Double of your input: ');
+  writeln(result);
+  
   { Test string output }
   writeln('Test completed successfully!')
 end.
@@ -93,21 +104,14 @@ end.
 
 ## Important Note
 
-**This distribution contains only the assembly backend.** The `comprehensive_test.pas` file is provided as a reference example, but you cannot compile Pascal source directly with this package.
+**This release includes the Pascal front-end and the assembly backend.** You can compile Pascal source (`.pas`) directly to a native executable with `build-asm`.
 
-To use this backend, you need:
-1. A complete compiler to generate IR from Pascal source
-2. Then use this backend to compile IR to native code
-
-### Example Workflow (requires complete compiler):
+### Example Workflow:
 ```bash
-# Step 1: Use complete compiler to generate IR (not possible with this distribution)
-# complete_compiler --generate-ir comprehensive_test.pas comprehensive_test.ir
+# Compile Pascal source to native executable
+swipl -q -s pascal_compiler.pl -- build-asm comprehensive_test.pas comprehensive_test
 
-# Step 2: Use this assembly backend to compile IR to native code
-swipl -q -s pascal_compiler.pl -- build-asm comprehensive_test.ir comprehensive_test
-
-# Step 3: Run the compiled program
+# Run the compiled program
 ./comprehensive_test
 ```
 
@@ -124,6 +128,8 @@ swipl -q -s pascal_compiler.pl -- build-asm comprehensive_test.ir comprehensive_
 1
 30
 15
+Enter a number: You entered: [your input]
+Double of your input: [your input * 2]
 Test completed successfully!
 ```
 
@@ -142,16 +148,6 @@ The test program has been successfully compiled and executed using the assembly 
 - ✅ String literal output
 - ✅ Input operations (readln)
 - ✅ Multiple writeln statements
-
-## Comparison with C Backend
-
-The same program can be compiled with the C backend for comparison:
-```bash
-swipl -q -s pascal_compiler.pl -- build-c comprehensive_test.pas comprehensive_test_c
-./comprehensive_test_c
-```
-
-Both backends produce identical output, confirming the assembly backend's correctness.
 
 ## Test Coverage Analysis
 

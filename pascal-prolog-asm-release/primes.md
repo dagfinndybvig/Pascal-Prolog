@@ -263,7 +263,7 @@ Every integer greater than 1 either is prime itself or is the product of prime n
 - **Subtraction approach**: Repeated subtraction until 0 or negative
 - **Multiplication approach**: Building multiples until matching i
 
-### Complexity Analysis
+### Complexity Analysis (per candidate number n)
 
 | Approach | Complexity | Operations | Notes |
 |----------|------------|------------|-------|
@@ -278,9 +278,9 @@ Every integer greater than 1 either is prime itself or is the product of prime n
 
 Our implementation handles 32-bit signed integers (-2,147,483,648 to 2,147,483,647):
 
-- **Safe limit**: 46,340 (√46,340 ≈ 215, 215² = 46,225)
-- **Danger zone**: 46,341 (√46,341 ≈ 215.27, 216² = 46,656)
-- **Overflow**: 46,342 (√46,342 ≈ 215.27, but 215² = 46,225, 216² = 46,656 > MAX_INT)
+- **Largest safe integer square root**: 46,340
+- **Largest square that fits in 32-bit signed int**: 46,340² = 2,147,395,600
+- **First overflowing square**: 46,341² = 2,147,488,281 (> 2,147,483,647)
 
 The square root calculation uses integer arithmetic to avoid floating-point operations while staying within safe bounds.
 

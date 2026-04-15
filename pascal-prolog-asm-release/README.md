@@ -42,9 +42,6 @@ swipl --version  # Should show 8.4.2+
 gcc --version    # Should show 11.4.0+
 ```
 
-# ...
-```
-=======
 ### Compile and Run a Pascal Program
 
 ```bash
@@ -69,8 +66,6 @@ swipl -q -s pascal_compiler.pl -- build-asm comprehensive_test.pas comprehensive
 # Enter a number: You entered: [your input]
 # Double of your input: [your input * 2]
 # Test completed successfully!
-```================================
-# ...
 ```
 
 ## 📚 About This Project
@@ -122,20 +117,27 @@ This release includes multiple prime number algorithms that demonstrate differen
 # List all prime programs
 ls -1 primes*.pas
 
-# Build and run the slowest version
-swipl -q -s pascal_compiler.pl -- build-asm primes_simple_slow.pas primes_slow
-./primes_slow
+# Build and run a division-free (slow) version
+swipl -q -s pascal_compiler.pl -- build-asm primes_no_division.pas primes_no_division
+./primes_no_division
 
-# Build and run the fastest version
-swipl -q -s pascal_compiler.pl -- build-asm primes_simple_fast.pas primes_fast
-./primes_fast
+# Build and run an optimized square-root version
+swipl -q -s pascal_compiler.pl -- build-asm primes_sqrt_optimized.pas primes_sqrt_optimized
+./primes_sqrt_optimized
+
+# Compare minimal benchmark-style variants (count of primes <= 1000)
+swipl -q -s pascal_compiler.pl -- build-asm primes_simple_slow.pas primes_simple_slow
+swipl -q -s pascal_compiler.pl -- build-asm primes_simple_fast.pas primes_simple_fast
+./primes_simple_slow   # 168
+./primes_simple_fast   # 168
 ```
 
 The prime examples show:
-- **`primes_simple_slow.pas`**: Naive subtraction-based approach (O(n²))
-- **`primes_simple_fast.pas`**: Square root optimized approach (O(n√n))
-- **`primes_no_division.pas`**: Division-free algorithm
-- **`primes_sqrt_optimized.pas`**: Fully optimized version
+- **`primes_simple_slow.pas`**: Naive subtraction-based counter (primes <= 1000)
+- **`primes_simple_fast.pas`**: Square-root optimized counter (primes <= 1000)
+- **`primes_no_division.pas`**: Division-free prime listing (< 200)
+- **`primes_sqrt_optimized.pas`**: Optimized prime listing (< 200)
+- **`primes_with_summary.pas`**: Optimized display with summary (2..4999)
 
 ### Example Pascal Program
 
@@ -190,9 +192,9 @@ end.
    - Proper error handling and termination
 
 3. **Robust and Tested**
-   - Comprehensive test suite (10+ test cases)
-   - Edge case coverage (large numbers, complex expressions)
-   - Full parity with C backend
+    - Comprehensive test suite (10+ test cases)
+    - Edge case coverage (large numbers, complex expressions)
+    - Consistent results across multiple prime implementations
 
 ### Compilation Pipeline
 
@@ -208,10 +210,13 @@ pascal-prolog-asm-release/
 ├── src/                        # Assembly generator
 │   └── codegen_asm_x86_64.pl   # Core assembly code
 ├── comprehensive_test.pas     # Comprehensive test program
+├── primes*.pas                 # Prime algorithm examples
+├── primes.md                   # Prime algorithm documentation
 ├── runtime/                    # Runtime library
 │   ├── runtime.c               # Runtime functions
 │   ├── runtime.h               # Runtime headers
-│   └── libruntime.a            # Pre-compiled runtime
+│   ├── runtime.o               # Runtime object file
+│   └── libruntime.a            # Runtime static library
 ├── README.md                   # This file
 └── UNLICENSE                   # License
 ```
@@ -303,9 +308,9 @@ swipl -q -s pascal_compiler.pl -- build-asm <source.pas> <output>
 
 3. **No C Backend**: This is an assembly-only release. The C backend has been omitted for minimal package size.
 
-3. **Error Handling**: While comprehensive error handling is implemented, some edge cases may not be covered. Always test your programs thoroughly.
+4. **Error Handling**: While comprehensive error handling is implemented, some edge cases may not be covered. Always test your programs thoroughly.
 
-4. **Performance**: While optimized, this is still an educational compiler. For production use, consider commercial compilers for better optimization.
+5. **Performance**: While optimized, this is still an educational compiler. For production use, consider commercial compilers for better optimization.
 
 ### Security Considerations
 
