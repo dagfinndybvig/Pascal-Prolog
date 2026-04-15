@@ -40,39 +40,44 @@ build_asm(SourcePath, OutputPath) :-
     check_program(AST),
     lower_program(AST, IRProgram),
     setup_call_cleanup(
-        tmp_file_stream(text, TempAsmPath, Stream),
+        tmp_file_stream(text, TempAsmPath, AsmStream),
         (
-            close(Stream),
+            close(AsmStream),
             write_asm_file(TempAsmPath, IRProgram),
-            runtime_paths(RuntimeCPath, RuntimeIncludeDir),
-            tmp_file_stream(text, TempObjPath, ObjStream),
-            close(ObjStream),
-            process_create(
-                path(gcc),
-                [
-                    '-x', 'assembler',
-                    TempAsmPath,
-                    '-c',
-                    '-o', TempObjPath
-                ],
-                [process(PID1)]
-            ),
-            process_wait(PID1, Status1),
-            expect_success(Status1),
-            process_create(
-                path(gcc),
-                [
-                    TempObjPath,
-                    RuntimeCPath,
-                    '-I', RuntimeIncludeDir,
-                    '-o', OutputPath
-                ],
-                [process(PID2)]
-            ),
-            process_wait(PID2, Status2),
-            expect_success(Status2)
+            setup_call_cleanup(
+                tmp_file_stream(text, TempObjPath, ObjStream),
+                (
+                    close(ObjStream),
+                    process_create(
+                        path(gcc),
+                        [
+                            '-x', 'assembler',
+                            TempAsmPath,
+                            '-c',
+                            '-o', TempObjPath
+                        ],
+                        [process(PID1)]
+                    ),
+                    process_wait(PID1, Status1),
+                    expect_success(Status1),
+                    runtime_paths(RuntimeCPath, RuntimeIncludeDir),
+                    process_create(
+                        path(gcc),
+                        [
+                            TempObjPath,
+                            RuntimeCPath,
+                            '-I', RuntimeIncludeDir,
+                            '-o', OutputPath
+                        ],
+                        [process(PID2)]
+                    ),
+                    process_wait(PID2, Status2),
+                    expect_success(Status2)
+                ),
+                delete_file(TempObjPath)
+            )
         ),
-        delete_file(TempObjPath)
+        delete_file(TempAsmPath)
     ).
 
 runtime_paths(RuntimeCPath, RuntimeIncludeDir) :-
@@ -126,9 +131,9 @@ usage :-
     writeln("Usage:"),
     writeln("  swipl -q -s pascal_compiler.pl -- parse <source.pas>"),
     writeln("  swipl -q -s pascal_compiler.pl -- check <source.pas>"),
-
     writeln("  swipl -q -s pascal_compiler.pl -- asm <source.pas> <out.s>"),
-    writeln("  swipl -q -s pascal_compiler.pl -- build-asm <source.pas> <out_binary>").
+    writeln("  swipl -q -s pascal_compiler.pl -- build-asm <source.pas> <out_binary>"),
+    writeln("  swipl -q -s pascal_compiler.pl -- build_asm <source.pas> <out_binary>").
 
 main :-
     current_prolog_flag(argv, Argv),
@@ -138,11 +143,13 @@ main :-
     ;   Argv = [check, Source]
     ->  check_pascal(Source),
         writeln(ok)
-
     ;   Argv = [asm, Source, AsmOut]
     ->  compile_to_asm(Source, AsmOut),
         format("Wrote ~w~n", [AsmOut])
     ;   Argv = ['build-asm', Source, OutBin]
+    ->  build_asm(Source, OutBin),
+        format("Built ~w~n", [OutBin])
+    ;   Argv = [build_asm, Source, OutBin]
     ->  build_asm(Source, OutBin),
         format("Built ~w~n", [OutBin])
     ;   usage,
