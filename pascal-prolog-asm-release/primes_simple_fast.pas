@@ -29,7 +29,11 @@ begin
     end;
     if is_prime = 1 then count := count + 1;
     i := i + 2;
+    write(i);
+    write(' ');
   end;
-  
+
+  writeln('');  
+  write('Number of primes: ');
   writeln(count);
 end.
