@@ -1,15 +1,16 @@
 { Prime number calculator - prints all primes less than 200 }
-{ Build command: swipl -q -s pascal_compiler.pl -- build-asm primes_less_than_200_simple.pas primes_less_than_200 }
+{ Build command: swipl -q -s pascal_compiler.pl -- build-asm primes_less_than_200.pas primes_less_than_200 }
 { Run command: ./primes_less_than_200 }
 
 program primes_less_than_200;
 
 var
-  i, j, is_prime, quotient, product: integer;
+  i, j, is_prime, remainder: integer;
 
 begin
-  writeln('Version 1');
-  writeln('---------');
+  writeln('Version 2');
+  writeln('.........');
+
   { Print all prime numbers less than 200 }
   i := 2; { Start from 2, the first prime number }
   
@@ -22,11 +23,11 @@ begin
     j := 2;
     while j < i do
     begin
-      { Check if i is divisible by j using division and multiplication }
-      quotient := i / j;
-      product := quotient * j;
+      { Calculate remainder using: i - (i/j)*j }
+      { This is more efficient than the previous (i/j)*j = i approach }
+      remainder := i - (i / j) * j;
       
-      if product = i then
+      if remainder = 0 then
       begin
         { i is divisible by j, so it's not prime }
         is_prime := 0;
