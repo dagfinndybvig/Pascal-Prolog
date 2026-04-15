@@ -7,7 +7,7 @@ begin
   i := 3;
   count := 1; { count 2 separately }
   
-  while i <= 1000 do
+  while i <= 46000 do
   begin
     is_prime := 1;
     begin
