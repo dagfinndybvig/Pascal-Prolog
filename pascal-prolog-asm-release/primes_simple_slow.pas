@@ -27,10 +27,15 @@ begin
       end;
       j := j + 1;
     end;
-    if is_prime = 1 then count := count + 1;
+    if is_prime = 1 then
+	begin
+	 count := count + 1;
+	 write(i);
+    	 write(' ');
+	end;
+
     i := i + 1;
-    write(i);
-    write(' ');
+
   end;
   
   writeln('');
