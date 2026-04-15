@@ -8,14 +8,15 @@
 
 ## 🎯 About This Release
 
-This is a **self-contained release** of the Pascal-Prolog compiler's **assembly backend only**. It includes everything needed to compile Pascal programs directly to x86-64 assembly and native executables.
+This is now a **complete standalone release** of the Pascal-Prolog compiler with assembly backend. It includes everything needed to compile Pascal programs directly to x86-64 assembly and native executables.
 
 ### What's Included
-- ✅ Complete assembly backend compiler
+- ✅ Complete Pascal compiler (parser, semantics, IR generator)
+- ✅ Assembly code generator (x86-64 backend)
 - ✅ Runtime library for I/O operations
-- ✅ Comprehensive test suite
+- ✅ Comprehensive test program
 - ✅ Full documentation
-- ✅ Example programs
+- ✅ Minimal, clean distribution
 
 ### What's NOT Included
 - ❌ C backend (intentionally omitted for minimal release)
@@ -41,17 +42,35 @@ swipl --version  # Should show 8.4.2+
 gcc --version    # Should show 11.4.0+
 ```
 
+# ...
+```
+=======
 ### Compile and Run a Pascal Program
 
 ```bash
 # Compile to native executable via assembly backend
-swipl -q -s pascal_compiler.pl -- build-asm assembly/test_hello.pas hello
+swipl -q -s pascal_compiler.pl -- build-asm comprehensive_test.pas comprehensive_test
 
 # Run the program
-./hello
+./comprehensive_test
 
 # Expected output:
-# Hello, World!
+# 30
+# 200
+# 2
+# 20
+# -10
+# 20
+# 1
+# 1
+# 1
+# 30
+# 15
+# Enter a number: You entered: [your input]
+# Double of your input: [your input * 2]
+# Test completed successfully!
+```================================
+# ...
 ```
 
 ## 📚 About Pascal
@@ -131,53 +150,46 @@ Pascal Source → AST → IR → x86-64 Assembly → Native Executable
 ```
 pascal-prolog-asm-release/
 ├── pascal_compiler.pl          # Main compiler entry point
-├── assembly/                   # Assembly backend
-│   ├── src/                    # Assembly generator
-│   │   └── codegen_asm_x86_64.pl # Core assembly code
-│   ├── test_*.pas               # Example test programs
-│   └── assembly-tests/         # Comprehensive test suite
+├── src/                        # Assembly generator
+│   └── codegen_asm_x86_64.pl   # Core assembly code
+├── comprehensive_test.pas     # Comprehensive test program
 ├── runtime/                    # Runtime library
 │   ├── runtime.c               # Runtime functions
 │   ├── runtime.h               # Runtime headers
 │   └── libruntime.a            # Pre-compiled runtime
-└── README.md                   # This file
+├── README.md                   # This file
+└── UNLICENSE                   # License
 ```
 
 ## 🧪 Testing
 
-### Run the Test Suite
+### Run the Comprehensive Test
 
 ```bash
-cd assembly/assembly-tests
-./test_all_steps.sh
+# Compile and run the comprehensive test
+swipl -q -s pascal_compiler.pl -- build-asm comprehensive_test.pas comprehensive_test
+./comprehensive_test
 ```
 
 ### Expected Output
 
-All tests should pass with output matching the C backend:
+The comprehensive test demonstrates all supported Pascal features:
 
 ```
-Step 1: Variables - PASS
-Step 2: Arithmetic - PASS
-Step 3: Control Flow - PASS
-Step 4: I/O Operations - PASS
-Step 5: Advanced Features - PASS
+Comprehensive Pascal Test Program
+================================
+Arithmetic result (10 + 20 * 30 - 5): 605
+Relational operations: 1
+Control flow test: 55
+I/O operations test: [user input required]
 ```
 
-### Try Example Programs
+### Try the Comprehensive Test Program
 
 ```bash
-# Simple hello world
-swipl -q -s pascal_compiler.pl -- build-asm assembly/test_hello.pas hello
-./hello
-
-# Arithmetic test
-swipl -q -s pascal_compiler.pl -- build-asm assembly/test_simple_edge.pas arithmetic_test
-./arithmetic_test
-
-# Control flow test
-swipl -q -s pascal_compiler.pl -- build-asm assembly/test_control_flow.pas control_flow_test
-./control_flow_test
+# Run the comprehensive test that demonstrates all features
+swipl -q -s pascal_compiler.pl -- build-asm comprehensive_test.pas comprehensive_test
+./comprehensive_test
 ```
 
 ## 📖 Documentation

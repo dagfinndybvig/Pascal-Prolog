@@ -91,15 +91,23 @@ begin
 end.
 ```
 
-## Compilation and Execution
+## Important Note
 
-### Compile with Assembly Backend:
-```bash
-swipl -q -s pascal_compiler.pl -- build-asm comprehensive_test.pas comprehensive_test
-```
+**This distribution contains only the assembly backend.** The `comprehensive_test.pas` file is provided as a reference example, but you cannot compile Pascal source directly with this package.
 
-### Execute the Compiled Program:
+To use this backend, you need:
+1. A complete compiler to generate IR from Pascal source
+2. Then use this backend to compile IR to native code
+
+### Example Workflow (requires complete compiler):
 ```bash
+# Step 1: Use complete compiler to generate IR (not possible with this distribution)
+# complete_compiler --generate-ir comprehensive_test.pas comprehensive_test.ir
+
+# Step 2: Use this assembly backend to compile IR to native code
+swipl -q -s pascal_compiler.pl -- build-asm comprehensive_test.ir comprehensive_test
+
+# Step 3: Run the compiled program
 ./comprehensive_test
 ```
 

@@ -1,76 +1,77 @@
 program comprehensive_test;
 
 var
-  a, b, c, result: integer;
-  name: string;
+  a, b, c, result, temp, user_input: integer;
 
 begin
-  writeln('Comprehensive Pascal Test Program');
-  writeln('================================');
-  
-   Test variable declarations and assignments
+  { Test basic arithmetic }
   a := 10;
   b := 20;
-  c := 30;
-  
-   Test arithmetic operations
-  result := a + b * c - 5;
-  write('Arithmetic result (10 + 20 * 30 - 5): ');
-  writeln(result);
-  
-   Test comparison operators
-  if a < b then
-    writeln('a is less than b')
-  else
-    writeln('a is not less than b');
-  
-  if b >= c then
-    writeln('b is greater than or equal to c')
-  else
-    writeln('b is less than c');
-  
-  if a = 10 then
-    writeln('a equals 10')
-  else
-    writeln('a does not equal 10');
-  
-   Test nested blocks and variable scoping
-  begin
-    var temp: integer;
-    temp := a + b;
-    writeln('Nested block temp value: ', temp);
-  end;
-  
-   Test input/output operations
-  write('Enter your name: ');
-  readln(name);
-  write('Hello, ');
-  writeln(name);
-  
-  write('Enter first number: ');
-  readln(a);
-  write('Enter second number: ');
-  readln(b);
-  
-  result := a * b + (a + b);
-  write('Result of (a * b + (a + b)): ');
-  writeln(result);
-  
-   Test negative numbers
-  c := -a;
-  write('Negative of a: ');
+  c := a + b;
   writeln(c);
   
-   Test complex expression
-  result := (a + b) * (c - 5) / 2;
-  write('Complex expression result: ');
+  { Test more arithmetic operations }
+  result := a * b;
   writeln(result);
   
-  writeln('Test completed successfully!');
+  result := b / a;
+  writeln(result);
   
-   Final check
-  if result > 0 then
-    writeln('Final result is positive')
+  { Test complex expression }
+  result := ((a + b) * 2) / 3;
+  writeln(result);
+  
+  { Test unary operations }
+  temp := -a;
+  writeln(temp);
+  
+  temp := -(-b);
+  writeln(temp);
+  
+  { Test relational operators }
+  if a < b then
+    writeln(1)
   else
-    writeln('Final result is not positive')
+    writeln(0);
+  
+  if a = 10 then
+    writeln(1)
+  else
+    writeln(0);
+  
+  if b >= a then
+    writeln(1)
+  else
+    writeln(0);
+  
+  { Test nested blocks }
+  begin
+    var inner: integer;
+    inner := a + b;
+    writeln(inner)
+  end;
+  
+  { Test while loop }
+  temp := 0;
+  c := 1;
+  while c <= 5 do
+  begin
+    temp := temp + c;
+    c := c + 1
+  end;
+  writeln(temp);
+  
+  { Test input operations }
+  write('Enter a number: ');
+  readln(user_input);
+  write('You entered: ');
+  writeln(user_input);
+  
+  { Use input in calculation }
+  result := user_input * 2;
+  write('Double of your input: ');
+  writeln(result);
+  
+  { Test string output }
+  writeln('Test completed successfully!')
 end.
