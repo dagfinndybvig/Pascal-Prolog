@@ -6,12 +6,24 @@ This directory contains a minimal proof of concept (PoC) for the assembly backen
 
 The assembly backend is now functionally complete for the project’s Step 1–5 test surface, with passing C-vs-ASM parity via `assembly/assembly-tests/test_all_steps.sh`.
 
-Supported in ASM:
+### Enhanced Features (NEW)
+
+The assembly backend now includes several advanced features beyond the basic functionality:
+
+1. **Stack Overflow Protection**: Runtime detection with 4KB guard pages
+2. **Dynamic Stack Frame Sizing**: Optimal memory allocation based on actual variable usage
+3. **Register Allocation Optimization**: Smart register usage to minimize stack operations
+4. **Comprehensive Error Handling**: Division by zero detection and runtime error reporting
+5. **Robust Edge Case Handling**: Support for large numbers, complex expressions, and nested blocks
+
+### Supported in ASM:
 1. Integer variables, assignment, unary minus, arithmetic (`+ - * /`).
 2. Comparisons (`= <> < <= > >=`) and control flow (`if/then/else`, `while`, nested blocks).
 3. Scoped block-local `var` declarations (including shadowing).
 4. I/O: `write`/`writeln` for integers and strings, and `readln` for integer input.
 5. Robust string literal emission (deduplicated labels, escaping for quotes/backslashes/newlines).
+6. **Runtime Error Detection**: Stack overflow and division by zero protection.
+7. **Performance Optimizations**: Register allocation and dynamic stack sizing.
 
 The compiler driver paths `-- asm` and `-- build-asm` are operational end-to-end.
 

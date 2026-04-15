@@ -31,6 +31,10 @@ Compilation pipeline:
 - GCC toolchain (compiler + linker)
 - C standard library development headers (provided by `build-essential` on Debian/Ubuntu)
 
+### Release Version Available
+
+A **self-contained release** of the assembly backend is available in the `pascal-prolog-asm-release/` directory. This release includes everything needed to compile Pascal programs directly to x86-64 assembly without requiring the C backend. See the release package for a minimal, production-ready version.
+
 Ubuntu/Debian install:
 
 ```bash
