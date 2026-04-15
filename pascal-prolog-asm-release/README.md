@@ -18,11 +18,6 @@ This is now a **complete standalone release** of the Pascal-Prolog compiler with
 - ✅ Full documentation
 - ✅ Minimal, clean distribution
 
-### What's NOT Included
-- ❌ C backend (intentionally omitted for minimal release)
-- ❌ Development files (build scripts, etc.)
-- ❌ Git history (clean release package)
-
 ## 🚀 Quick Start
 
 ### Requirements
