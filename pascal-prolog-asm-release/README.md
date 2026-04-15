@@ -73,6 +73,15 @@ swipl -q -s pascal_compiler.pl -- build-asm comprehensive_test.pas comprehensive
 # ...
 ```
 
+## 📚 About This Project
+
+This project uses **prime number algorithms** as a vehicle to explore and demonstrate various programming approaches within our Pascal compiler's constraints. The prime programs serve as practical examples showing:
+
+- Algorithm evolution from naive to optimized
+- Performance impact of mathematical optimizations
+- Constraint handling (division vs no-division environments)
+- Complexity analysis in practice
+
 ## 📚 About Pascal
 
 ### Historical Context
@@ -104,6 +113,29 @@ This release supports a **practical subset** of Pascal focused on core programmi
 - Floating-point numbers
 - Pointer arithmetic
 - User-defined types
+
+### Prime Number Examples
+
+This release includes multiple prime number algorithms that demonstrate different programming approaches:
+
+```bash
+# List all prime programs
+ls -1 primes*.pas
+
+# Build and run the slowest version
+swipl -q -s pascal_compiler.pl -- build-asm primes_simple_slow.pas primes_slow
+./primes_slow
+
+# Build and run the fastest version
+swipl -q -s pascal_compiler.pl -- build-asm primes_simple_fast.pas primes_fast
+./primes_fast
+```
+
+The prime examples show:
+- **`primes_simple_slow.pas`**: Naive subtraction-based approach (O(n²))
+- **`primes_simple_fast.pas`**: Square root optimized approach (O(n√n))
+- **`primes_no_division.pas`**: Division-free algorithm
+- **`primes_sqrt_optimized.pas`**: Fully optimized version
 
 ### Example Pascal Program
 
