@@ -86,13 +86,15 @@ This implementation is inspired by Wirth's classic book **"Algorithms + Data Str
 This release supports a **practical subset** of Pascal focused on core programming constructs:
 
 #### ✅ Supported Features
-- **Variables**: Integer variables with assignment
-- **Arithmetic**: `+`, `-`, `*`, `/` (with division by zero protection)
+- **Variables**: Integer variables only (32-bit signed integers)
+- **Arithmetic**: Integer arithmetic only (`+`, `-`, `*`, `/`)
+  - **Division**: Integer division (truncates toward zero, e.g., `7/2 = 3`)
+  - **No floating-point**: All operations work exclusively with integers
 - **Control Flow**: `if-then-else`, `while-do` statements
-- **I/O Operations**: `readln`, `write`, `writeln`
-- **String Literals**: Output-only string literals
-- **Nested Blocks**: Local variable scoping
-- **Relational Operators**: `=`, `<>`, `<`, `<=`, `>`, `>=`
+- **I/O Operations**: `readln`, `write`, `writeln` (integer and string output)
+- **String Literals**: Output-only string literals (no string variables)
+- **Nested Blocks**: Local variable scoping with proper shadowing
+- **Relational Operators**: `=`, `<>`, `<`, `<=`, `>`, `>=` (integer comparisons only)
 - **Unary Operators**: `+` (implicit), `-` (negation)
 
 #### ❌ Not Yet Implemented
@@ -117,6 +119,27 @@ begin
   result := x + y;
   writeln('The result is: ');
   writeln(result)
+end.
+```
+
+### Integer Division Example
+
+```pascal
+program DivisionDemo;
+
+var
+  a, b, result: integer;
+
+begin
+  a := 7;
+  b := 2;
+  result := a / b;  { Integer division: 7/2 = 3 }
+  writeln('7 / 2 = ');
+  writeln(result);  { Outputs: 3 }
+  
+  result := -7 / 2; { Integer division: -7/2 = -3 }
+  writeln('-7 / 2 = ');
+  writeln(result);  { Outputs: -3 }
 end.
 ```
 
@@ -234,11 +257,19 @@ swipl -q -s pascal_compiler.pl -- build-asm <source.pas> <output>
 
 ## ⚠️ Limitations and Warnings
 
-### Current Limitations
+### Critical Limitations
 
-1. **Language Subset**: This release implements a subset of Pascal focused on core programming constructs. See the "Supported Features" section for details.
+1. **Integer-Only Arithmetic**: This compiler only supports **integer arithmetic**. All variables are 32-bit signed integers, and all operations (including division) work exclusively with integers.
 
-2. **No C Backend**: This is an assembly-only release. The C backend has been omitted for minimal package size.
+   **Important behaviors:**
+   - `7 / 2` evaluates to `3` (integer division, truncates toward zero)
+   - `-7 / 2` evaluates to `-3` (not -3.5)
+   - No floating-point numbers or operations
+   - No automatic type conversion
+
+2. **Language Subset**: This release implements a focused subset of Pascal for core programming constructs. See the "Supported Features" section for complete details.
+
+3. **No C Backend**: This is an assembly-only release. The C backend has been omitted for minimal package size.
 
 3. **Error Handling**: While comprehensive error handling is implemented, some edge cases may not be covered. Always test your programs thoroughly.
 
