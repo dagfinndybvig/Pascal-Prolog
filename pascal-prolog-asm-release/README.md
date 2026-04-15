@@ -3,7 +3,7 @@
 ## 📦 Pascal-Prolog Assembly Backend Release
 
 **Version**: 1.0.0
-**Release Date**: 2024
+**Release Date**: 2026
 **License**: Unlicense (Public Domain)
 
 ## 🎯 About This Release
