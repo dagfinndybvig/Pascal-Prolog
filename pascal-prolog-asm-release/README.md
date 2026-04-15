@@ -1,4 +1,4 @@
-# Pascal-Prolog Assembly Backend - Release Version 1
+# Pascal-Prolog Assembly Backend - Release Version 1.0
 
 ## 📦 Pascal-Prolog Assembly Backend Release
 
