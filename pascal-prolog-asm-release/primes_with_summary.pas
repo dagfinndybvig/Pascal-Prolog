@@ -8,7 +8,7 @@ begin
   write('2 ');
   i := 3;
   
-  while i <= 5000 do
+  while i <= 46000 do
   begin
     is_prime := 1;
     
@@ -40,5 +40,5 @@ begin
   
   writeln('');
   writeln('');
-  writeln('Found 670 primes from 2 to 4999');
+  writeln('Found these primes between  2 and 46000');
 end.
