@@ -133,6 +133,8 @@ The prime examples show:
 - **`primes_no_division.pas`**: Division-free prime listing (< 200)
 - **`primes_sqrt_optimized.pas`**: Optimized prime listing (< 200)
 - **`primes_with_summary.pas`**: Optimized display with summary (2..4999)
+- **`primes_mult_sub.pas`**: Multiplication+subtraction approach (< 200)
+- **`primes_sqrt_no_div.pas`**: Square root + division-free optimization (< 200)
 
 ### Example Pascal Program
 

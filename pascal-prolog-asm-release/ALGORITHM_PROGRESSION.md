@@ -26,6 +26,10 @@ This document summarizes the evolutionary path of prime number algorithms in thi
 
 **Key Insight**: Divisibility can be tested by repeated subtraction
 
+**Variants**:
+- `primes_no_division.pas`: Simple subtraction-based testing
+- `primes_mult_sub.pas`: Multiplication+subtraction hybrid approach
+
 ### 3. Square Root Optimized Approaches
 **Files**: `primes_sqrt_optimized.pas`, `primes_sqrt_no_div.pas`
 
@@ -36,6 +40,10 @@ This document summarizes the evolutionary path of prime number algorithms in thi
 - 10-100× faster than naive approaches
 
 **Key Insight**: If n is composite, it has a factor ≤ √n
+
+**Variants**:
+- `primes_sqrt_optimized.pas`: Square root optimization with division
+- `primes_sqrt_no_div.pas`: Square root optimization with subtraction-based testing
 
 ### 4. Final Presentation Version
 **File**: `primes_with_summary.pas`
@@ -66,6 +74,7 @@ All algorithms test: Does j divide i?
 - Division: `i % j == 0`
 - Subtraction: Repeated subtraction until 0 or negative
 - Multiplication: Build multiples until matching i
+- Hybrid: Combine multiplication and subtraction for efficiency
 
 ### Optimization Principles
 1. **Square root limit**: Test only up to √n
