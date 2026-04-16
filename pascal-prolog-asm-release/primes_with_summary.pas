@@ -40,5 +40,5 @@ begin
   
   writeln('');
   writeln('');
-  writeln('Found these primes between  2 and 46000');
+  writeln('Found these primes between 2 and 46000');
 end.
