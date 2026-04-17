@@ -43,7 +43,7 @@ gcc --version    # Should show 11.4.0+
 
 ```bash
 # Compile to native executable via assembly backend
-swipl -q -s pascal_compiler.pl -- build-asm comprehensive_test.pas comprehensive_test
+swipl -q -s pascal_compiler.pl -- build-asm examples/comprehensive_test.pas comprehensive_test
 
 # Run the program
 ./comprehensive_test
@@ -112,19 +112,19 @@ This release includes multiple prime number algorithms that demonstrate differen
 
 ```bash
 # List all prime programs
-ls -1 primes*.pas
+ls -1 examples/primes/*/*.pas
 
 # Build and run a division-free (slow) version
-swipl -q -s pascal_compiler.pl -- build-asm primes_no_division.pas primes_no_division
+swipl -q -s pascal_compiler.pl -- build-asm examples/primes/special/primes_no_division.pas primes_no_division
 ./primes_no_division
 
 # Build and run an optimized square-root version
-swipl -q -s pascal_compiler.pl -- build-asm primes_sqrt_optimized.pas primes_sqrt_optimized
+swipl -q -s pascal_compiler.pl -- build-asm examples/primes/optimized/primes_sqrt_optimized.pas primes_sqrt_optimized
 ./primes_sqrt_optimized
 
 # Compare minimal benchmark-style variants (count of primes <= 1000)
-swipl -q -s pascal_compiler.pl -- build-asm primes_simple_slow.pas primes_simple_slow
-swipl -q -s pascal_compiler.pl -- build-asm primes_simple_fast.pas primes_simple_fast
+swipl -q -s pascal_compiler.pl -- build-asm examples/primes/basic/primes_simple_slow.pas primes_simple_slow
+swipl -q -s pascal_compiler.pl -- build-asm examples/primes/basic/primes_simple_fast.pas primes_simple_fast
 ./primes_simple_slow   # 168
 ./primes_simple_fast   # 168
 ```
@@ -208,9 +208,16 @@ pascal-prolog-asm-release/
 ├── pascal_compiler.pl          # Main compiler entry point
 ├── src/                        # Assembly generator
 │   └── codegen_asm_x86_64.pl   # Core assembly code
-├── comprehensive_test.pas     # Comprehensive test program
-├── primes*.pas                 # Prime algorithm examples
-├── primes.md                   # Prime algorithm documentation
+├── examples/                    # Example Pascal programs
+│   ├── comprehensive_test.pas # Comprehensive test program
+│   └── primes/                 # Prime algorithm examples
+│       ├── basic/             # Basic prime algorithms
+│       ├── optimized/         # Optimized prime algorithms
+│       └── special/           # Specialized prime algorithms
+├── docs/                       # Documentation
+│   ├── primes.md              # Prime algorithm documentation
+│   ├── ALGORITHM_PROGRESSION.md # Algorithm evolution
+│   └── PERFORMANCE_COMPARISON.md # Performance analysis
 ├── runtime/                    # Runtime library
 │   ├── runtime.c               # Runtime functions
 │   ├── runtime.h               # Runtime headers
@@ -226,7 +233,7 @@ pascal-prolog-asm-release/
 
 ```bash
 # Compile and run the comprehensive test
-swipl -q -s pascal_compiler.pl -- build-asm comprehensive_test.pas comprehensive_test
+swipl -q -s pascal_compiler.pl -- build-asm examples/comprehensive_test.pas comprehensive_test
 ./comprehensive_test
 ```
 
@@ -247,7 +254,7 @@ I/O operations test: [user input required]
 
 ```bash
 # Run the comprehensive test that demonstrates all features
-swipl -q -s pascal_compiler.pl -- build-asm comprehensive_test.pas comprehensive_test
+swipl -q -s pascal_compiler.pl -- build-asm examples/comprehensive_test.pas comprehensive_test
 ./comprehensive_test
 ```
 
