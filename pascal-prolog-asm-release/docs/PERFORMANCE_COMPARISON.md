@@ -4,13 +4,13 @@
 
 We compare two extreme approaches to prime number generation:
 
-### 🐢 SLOWEST: `primes_no_division.pas`
+### 🐢 SLOWEST: `examples/primes/special/primes_no_division.pas`
 - **Approach**: Naive subtraction-based divisibility testing
 - **Complexity**: O(n²) - Tests all numbers from 2 to n-1 for each candidate
 - **Operations**: Uses only addition/subtraction (no division)
 - **Optimizations**: None
 
-### 🚀 FASTEST: `primes_sqrt_optimized.pas`
+### 🚀 FASTEST: `examples/primes/optimized/primes_sqrt_optimized.pas`
 - **Approach**: Square root optimization with division
 - **Complexity**: O(n√n) - Tests only up to √n, skips even numbers
 - **Operations**: Uses division for efficiency
@@ -31,13 +31,13 @@ For finding primes up to N:
 
 ### Run the slow version:
 ```bash
-swipl -q -s pascal_compiler.pl -- build-asm primes_no_division.pas primes_slow
+swipl -q -s pascal_compiler.pl -- build-asm examples/primes/special/primes_no_division.pas primes_slow
 ./primes_slow
 ```
 
 ### Run the fast version:
 ```bash
-swipl -q -s pascal_compiler.pl -- build-asm primes_sqrt_optimized.pas primes_fast
+swipl -q -s pascal_compiler.pl -- build-asm examples/primes/optimized/primes_sqrt_optimized.pas primes_fast
 ./primes_fast
 ```
 

@@ -13,7 +13,7 @@ This document explores various approaches to prime number generation, from the m
 
 ## Basic Division Approaches
 
-### 1. Simple Division Method (`primes_less_than_200_simple.pas`)
+### 1. Simple Division Method (`examples/primes/basic/primes_less_than_200_simple.pas`)
 
 **Mathematical Approach:**
 ```
@@ -39,7 +39,7 @@ if product = i then { j divides i }
 - 15 ÷ 2 = 7, 2×7=14 ≠ 15
 - 15 ÷ 3 = 5, 3×5=15 = 15 ✓ (not prime)
 
-### 2. Optimized Division Method (`primes_less_than_200.pas`)
+### 2. Optimized Division Method (`examples/primes/basic/primes_less_than_200.pas`)
 
 **Mathematical Improvement:**
 ```
@@ -63,7 +63,7 @@ if remainder = 0 then { j divides i }
 
 ## Division-Free Approaches
 
-### 3. Subtraction-Based Method (`primes_no_division.pas`)
+### 3. Subtraction-Based Method (`examples/primes/special/primes_no_division.pas`)
 
 **Mathematical Approach:**
 ```
@@ -92,7 +92,7 @@ end;
 
 **Trade-off:** Slower but more universally compatible
 
-### 4. Multiplication+Subtraction Method (`primes_mult_sub.pas`)
+### 4. Multiplication+Subtraction Method (`examples/primes/special/primes_mult_sub.pas`)
 
 **Mathematical Approach:**
 ```
@@ -126,7 +126,7 @@ if difference = 0 then { j divides i }
 
 ## Square Root Optimized Approaches
 
-### 5. Division with Square Root Optimization (`primes_sqrt_optimized.pas`)
+### 5. Division with Square Root Optimization (`examples/primes/optimized/primes_sqrt_optimized.pas`)
 
 **Mathematical Foundation:**
 ```
@@ -160,7 +160,7 @@ end;
 - No floating-point operations
 - Avoids overflow by stopping before √MAX_INT
 
-### 6. Division-Free with Square Root Optimization (`primes_sqrt_no_div.pas`)
+### 6. Division-Free with Square Root Optimization (`examples/primes/special/primes_sqrt_no_div.pas`)
 
 **Combines Both Optimizations:**
 - Square root limit (O(√n) complexity)
@@ -194,7 +194,7 @@ end;
 
 ## Final Presentation Version
 
-### 7. Screen-Filling Display with Summary (`primes_with_summary.pas`)
+### 7. Screen-Filling Display with Summary (`examples/primes/optimized/primes_with_summary.pas`)
 
 **Features:**
 - Uses optimized square root approach
@@ -242,11 +242,11 @@ swipl -q -s pascal_compiler.pl -- build-asm program_name.pas output_name
 
 ```bash
 # Build and run the simple version
-swipl -q -s pascal_compiler.pl -- build-asm primes_less_than_200_simple.pas primes_simple
+swipl -q -s pascal_compiler.pl -- build-asm examples/primes/basic/primes_less_than_200_simple.pas primes_simple
 ./primes_simple
 
 # Build and run the final presentation version
-swipl -q -s pascal_compiler.pl -- build-asm primes_with_summary.pas primes_display
+swipl -q -s pascal_compiler.pl -- build-asm examples/primes/optimized/primes_with_summary.pas primes_display
 ./primes_display
 ```
 

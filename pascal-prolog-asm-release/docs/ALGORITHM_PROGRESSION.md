@@ -5,7 +5,7 @@ This document summarizes the evolutionary path of prime number algorithms in thi
 ## The Progression
 
 ### 1. Basic Division Approaches
-**Files**: `primes_less_than_200_simple.pas`, `primes_less_than_200.pas`
+**Files**: `examples/primes/basic/primes_less_than_200_simple.pas`, `examples/primes/basic/primes_less_than_200.pas`
 
 **Characteristics**:
 - Use integer division to test divisibility
@@ -16,7 +16,7 @@ This document summarizes the evolutionary path of prime number algorithms in thi
 **Key Insight**: `remainder = i - (i/j)*j` tells us if j divides i
 
 ### 2. Division-Free Approaches
-**Files**: `primes_no_division.pas`, `primes_mult_sub.pas`
+**Files**: `examples/primes/special/primes_no_division.pas`, `examples/primes/special/primes_mult_sub.pas`
 
 **Characteristics**:
 - Use only addition/subtraction (no division operations)
@@ -27,11 +27,11 @@ This document summarizes the evolutionary path of prime number algorithms in thi
 **Key Insight**: Divisibility can be tested by repeated subtraction
 
 **Variants**:
-- `primes_no_division.pas`: Simple subtraction-based testing
-- `primes_mult_sub.pas`: Multiplication+subtraction hybrid approach
+- `examples/primes/special/primes_no_division.pas`: Simple subtraction-based testing
+- `examples/primes/special/primes_mult_sub.pas`: Multiplication+subtraction hybrid approach
 
 ### 3. Square Root Optimized Approaches
-**Files**: `primes_sqrt_optimized.pas`, `primes_sqrt_no_div.pas`
+**Files**: `examples/primes/optimized/primes_sqrt_optimized.pas`, `examples/primes/special/primes_sqrt_no_div.pas`
 
 **Characteristics**:
 - Test only up to √n (mathematical optimization)
@@ -42,11 +42,11 @@ This document summarizes the evolutionary path of prime number algorithms in thi
 **Key Insight**: If n is composite, it has a factor ≤ √n
 
 **Variants**:
-- `primes_sqrt_optimized.pas`: Square root optimization with division
-- `primes_sqrt_no_div.pas`: Square root optimization with subtraction-based testing
+- `examples/primes/optimized/primes_sqrt_optimized.pas`: Square root optimization with division
+- `examples/primes/special/primes_sqrt_no_div.pas`: Square root optimization with subtraction-based testing
 
 ### 4. Final Presentation Version
-**File**: `primes_with_summary.pas`
+**File**: `examples/primes/optimized/primes_with_summary.pas`
 
 **Characteristics**:
 - Screen-filling output format
@@ -96,8 +96,8 @@ Run each program to see the progression:
 
 ```bash
 # Build and run each version
-swipl -q -s pascal_compiler.pl -- build-asm primes_no_division.pas primes_slow
-swipl -q -s pascal_compiler.pl -- build-asm primes_sqrt_optimized.pas primes_fast
+swipl -q -s pascal_compiler.pl -- build-asm examples/primes/special/primes_no_division.pas primes_slow
+swipl -q -s pascal_compiler.pl -- build-asm examples/primes/optimized/primes_sqrt_optimized.pas primes_fast
 
 # Compare execution times
 ./primes_slow   # Noticeable delay
