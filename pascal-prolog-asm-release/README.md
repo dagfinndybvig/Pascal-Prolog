@@ -1,11 +1,11 @@
 <img width="1880" height="515" alt="image" src="https://github.com/user-attachments/assets/0c40b246-bb09-4c59-80ee-e9eafc54bde0" />
 
-# Pascal-Prolog Assembly Backend - Release Version 1.0
+# Pascal-Prolog Assembly Backend - Release Version 1.2.1
 
 ## 📦 Pascal-Prolog Assembly Backend Release
 
-**Version**: 1.0.0
-**Release Date**: 2026
+**Version**: 1.2.1
+**Release Date**: 2026-04-17
 **License**: Unlicense (Public Domain)
 
 ## 🎯 About This Release
@@ -84,7 +84,7 @@ This project uses **prime number algorithms** as a vehicle to explore and demons
 - Edge case validation
 - Comprehensive standards compliance table
 
-**Confidence Level:** 100% mathematical correctness confirmed
+**Confidence Level:** Verified by reproducible checks in `scripts/verify_math.py`
 
 ## 📚 About Pascal
 
@@ -134,19 +134,19 @@ swipl -q -s pascal_compiler.pl -- build-asm examples/primes/special/primes_no_di
 swipl -q -s pascal_compiler.pl -- build-asm examples/primes/optimized/primes_sqrt_optimized.pas primes_sqrt_optimized
 ./primes_sqrt_optimized
 
-# Compare minimal benchmark-style variants (count of primes <= 1000)
+# Compare benchmark-style variants (count of primes <= 46000)
 swipl -q -s pascal_compiler.pl -- build-asm examples/primes/basic/primes_simple_slow.pas primes_simple_slow
-swipl -q -s pascal_compiler.pl -- build-asm examples/primes/basic/primes_simple_fast.pas primes_simple_fast
-./primes_simple_slow   # 168
-./primes_simple_fast   # 168
+swipl -q -s pascal_compiler.pl -- build-asm examples/primes/optimized/primes_simple_fast.pas primes_simple_fast
+./primes_simple_slow   # ... Number of primes: 4761
+./primes_simple_fast   # ... Number of primes: 4761
 ```
 
 The prime examples show:
-- **`primes_simple_slow.pas`**: Naive subtraction-based counter (primes <= 1000)
-- **`primes_simple_fast.pas`**: Square-root optimized counter (primes <= 1000)
+- **`primes_simple_slow.pas`**: Naive subtraction-based counter (primes <= 46000)
+- **`primes_simple_fast.pas`**: Square-root optimized counter (primes <= 46000)
 - **`primes_no_division.pas`**: Division-free prime listing (< 200)
 - **`primes_sqrt_optimized.pas`**: Optimized prime listing (< 200)
-- **`primes_with_summary.pas`**: Optimized display with summary (2..4999)
+- **`primes_with_summary.pas`**: Optimized display with summary (2..46000)
 - **`primes_mult_sub.pas`**: Multiplication+subtraction approach (< 200)
 - **`primes_sqrt_no_div.pas`**: Square root + division-free optimization (< 200)
 
@@ -197,10 +197,10 @@ end.
    - Dynamic stack frame sizing (90% memory savings for small programs)
    - Efficient expression evaluation
 
-2. **Security Enhanced**
-   - Stack overflow protection with 4KB guard pages
+2. **Runtime Safety Checks**
+   - Stack frame bounds check in generated assembly
    - Division by zero runtime detection
-   - Proper error handling and termination
+   - Explicit error handlers and termination
 
 3. **Robust and Tested**
     - Comprehensive test suite (10+ test cases)
@@ -218,8 +218,12 @@ Pascal Source → AST → IR → x86-64 Assembly → Native Executable
 ```
 pascal-prolog-asm-release/
 ├── pascal_compiler.pl          # Main compiler entry point
-├── src/                        # Assembly generator
-│   └── codegen_asm_x86_64.pl   # Core assembly code
+├── src/                        # Compiler front-end + backend modules
+│   ├── lexer.pl                # Lexer
+│   ├── parser.pl               # Parser
+│   ├── semantics.pl            # Semantic checks
+│   ├── ir.pl                   # IR lowering
+│   └── codegen_asm_x86_64.pl   # x86-64 assembly generator
 ├── examples/                    # Example Pascal programs
 │   ├── comprehensive_test.pas # Comprehensive test program
 │   └── primes/                 # Prime algorithm examples
@@ -234,8 +238,7 @@ pascal-prolog-asm-release/
 ├── runtime/                    # Runtime library
 │   ├── runtime.c               # Runtime functions
 │   ├── runtime.h               # Runtime headers
-│   ├── runtime.o               # Runtime object file
-│   └── libruntime.a            # Runtime static library
+│   └── (built at compile time) # No prebuilt objects in release
 ├── README.md                   # This file
 └── UNLICENSE                   # License
 ```
@@ -252,15 +255,23 @@ swipl -q -s pascal_compiler.pl -- build-asm examples/comprehensive_test.pas comp
 
 ### Expected Output
 
-The comprehensive test demonstrates all supported Pascal features:
+The comprehensive test prints:
 
 ```
-Comprehensive Pascal Test Program
-================================
-Arithmetic result (10 + 20 * 30 - 5): 605
-Relational operations: 1
-Control flow test: 55
-I/O operations test: [user input required]
+30
+200
+2
+20
+-10
+20
+1
+1
+1
+30
+15
+Enter a number: You entered: [your input]
+Double of your input: [your input * 2]
+Test completed successfully!
 ```
 
 ### Try the Comprehensive Test Program
@@ -275,10 +286,9 @@ swipl -q -s pascal_compiler.pl -- build-asm examples/comprehensive_test.pas comp
 
 ### Assembly Backend Features
 
-1. **Stack Overflow Protection**
-   - 4KB guard page allocation
-   - Runtime stack pointer validation
-   - Automatic error detection and handling
+1. **Stack Frame Bounds Check**
+   - Runtime stack pointer validation against generated frame bounds
+   - Automatic error handling path on violation
 
 2. **Dynamic Stack Sizing**
    - Calculates exact stack needs: `16 + 8*N` bytes
@@ -333,7 +343,7 @@ swipl -q -s pascal_compiler.pl -- build-asm <source.pas> <output>
 
 ### Security Considerations
 
-- **Stack Overflow**: Protected with guard pages, but very deep recursion may still cause issues
+- **Stack Overflow**: Generated code includes a stack frame bounds check, but this is not OS-level guard-page protection
 - **Division by Zero**: Detected and handled, but other arithmetic errors are not caught
 - **Memory Safety**: No bounds checking on variables or stack usage
 - **Input Validation**: Limited to integer input validation

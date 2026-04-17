@@ -1,118 +1,64 @@
-# 🔬 Mathematical Verification Report
+# Mathematical Verification Report
 
-## Executive Summary
-**Status:** ✅ ALL TESTS PASSED
-**Date:** 2026-04-17
-**Version:** v1.2.0
-**Verified By:** Automated Mathematical Verification System
+## Status
+**Result:** PASS  
+**Date:** 2026-04-17  
+**Version:** v1.2.1
 
-## 📊 Test Results
+This verification is reproducible from files in this release package.
 
-### 1. Basic Prime Algorithm (`examples/primes/basic/primes_simple_slow.pas`)
-- **Output:** Generated 46 primes (2 to 199)
-- **First 10 primes:** 2, 3, 5, 7, 11, 13, 17, 19, 23, 29 ✅
-- **Last 5 primes:** 181, 191, 193, 197, 199 ✅
+## Reproducible Verification Procedure
 
-### 2. Mathematical Correctness Tests
+Run:
 
-#### Test 1: Primality Verification
-- **Method:** Verified each output number is actually prime using trial division
-- **Result:** ✅ PASSED - All 46 numbers are prime
-- **Algorithm:** Checked divisibility from 2 to √n for each number
+```bash
+python3 scripts/verify_math.py
+```
 
-#### Test 2: Sequence Correctness
-- **Method:** Compared generated sequence with computationally generated primes
-- **Result:** ✅ PASSED - Sequence matches expected prime numbers
-- **Verification:** Generated primes independently using Python and compared
+The script:
+1. Builds all `.pas` programs in `examples/`.
+2. Runs the prime programs and compares outputs against independently generated reference primes.
+3. Checks count-based variants up to 46000.
+4. Runs the comprehensive feature test with fixed input.
 
-#### Test 3: Known Primes Match
-- **Method:** Compared first 15 primes against known prime table
-- **Result:** ✅ PASSED - Exact match with standard prime references
-- **Known primes:** [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47]
+## Verified Results
 
-### 3. Cross-Algorithm Verification
+### 1. Build Integrity
+- All shipped example programs build successfully with:
+  - SWI-Prolog 8.4.2
+  - GCC 11.4.0
 
-#### Optimized Algorithm (`examples/primes/optimized/primes_sqrt_optimized.pas`)
-- **Output:** Generated primes using square-root optimization
-- **First 10 primes:** 2, 3, 5, 7, 11, 13, 17, 19, 23, 29 ✅
-- **Result:** ✅ PASSED - Matches basic algorithm output
+### 2. Prime Sequence Correctness (< 200)
+Verified programs output the exact prime sequence from 2 to 199:
+- `examples/primes/basic/primes_less_than_200.pas`
+- `examples/primes/basic/primes_less_than_200_simple.pas`
+- `examples/primes/special/primes_no_division.pas`
+- `examples/primes/special/primes_mult_sub.pas`
+- `examples/primes/optimized/primes_sqrt_optimized.pas`
+- `examples/primes/special/primes_sqrt_no_div.pas`
 
-### 4. Edge Cases Tested
+Reference sequence length: **46**
 
-#### Small Primes
-- **Test:** Numbers 2, 3, 5, 7
-- **Result:** ✅ Correctly identified as prime
-- **Note:** 2 is the only even prime (handled correctly)
+### 3. Prime Count Correctness (<= 46000)
+Verified against an independent sieve implementation:
+- `examples/primes/basic/primes_simple_slow.pas` reports **4761**
+- `examples/primes/optimized/primes_simple_fast.pas` reports **4761**
 
-#### Non-Prime Numbers
-- **Test:** Verified algorithm doesn't output composites
-- **Result:** ✅ PASSED - No composite numbers in output
-- **Examples tested:** 4, 6, 8, 9, 10, 12, 15, etc. (correctly excluded)
+Expected count of primes <= 46000: **4761**
 
-## 🧮 Mathematical Properties Verified
+### 4. Summary Variant Correctness
+- `examples/primes/optimized/primes_with_summary.pas`
+- Prime stream before summary matches independent reference for all primes <= 46000.
 
-### 1. Fundamental Theorem of Arithmetic
-- **Property:** Every integer > 1 is either prime or can be factored into primes
-- **Verification:** ✅ Algorithm correctly identifies prime building blocks
+### 5. Comprehensive Program Behavior
+- `examples/comprehensive_test.pas` executes correctly and produces expected arithmetic, control-flow, relational, I/O, and string-output behavior.
 
-### 2. Prime Distribution
-- **Property:** Primes become less frequent as numbers grow larger
-- **Verification:** ✅ Observed in output (gaps increase appropriately)
+## Complexity Notes
 
-### 3. Even Numbers
-- **Property:** Only even prime is 2
-- **Verification:** ✅ Algorithm correctly excludes all other even numbers
+- Naive divisor checking over a range up to `N`: approximately `O(N^2)`
+- Square-root bounded divisor checking over a range up to `N`: approximately `O(N*sqrt(N))`
+- Division-free variants are mathematically equivalent but slower due to repeated subtraction.
 
-## 📋 Verification Standards Used
+## Conclusion
 
-The mathematical correctness was verified against multiple authoritative standards:
-
-| Standard Type | Source | Verification Method | Result |
-|--------------|--------|---------------------|--------|
-| **Mathematical Definition** | Number Theory | Independent primality testing | ✅ PASS |
-| **Known Prime Tables** | Mathematical References | Exact sequence matching | ✅ PASS |
-| **Computational Generation** | Python algorithm | Independent prime generation | ✅ PASS |
-| **Cross-Algorithm** | Your own implementations | Consistency checking | ✅ PASS |
-| **Mathematical Properties** | Number Theory | Property validation | ✅ PASS |
-| **Edge Cases** | Common pitfalls | Boundary condition testing | ✅ PASS |
-
-**Primary Standard:** Formal mathematical definition of prime numbers
-**Secondary Standard:** Established prime number tables and references
-**Tertiary Standard:** Independent computational generation using Python
-**Internal Standard:** Cross-verification between different algorithm implementations
-
-## 📈 Performance Characteristics
-
-### Algorithm Complexity
-- **Basic Algorithm:** O(n²) - Checks all numbers up to n for each candidate
-- **Optimized Algorithm:** O(n√n) - Only checks up to √n for each candidate
-- **Both:** Correctly implement their respective mathematical approaches
-
-### Correctness vs. Efficiency
-- **Trade-off:** Basic algorithm is slower but easier to verify
-- **Result:** ✅ Both algorithms produce mathematically identical results
-
-## 🎯 Conclusion
-
-The prime number algorithms in this Pascal compiler are **mathematically correct**. They:
-
-1. ✅ Generate only prime numbers (no composites)
-2. ✅ Generate primes in correct sequence
-3. ✅ Match known prime tables exactly
-4. ✅ Handle edge cases properly
-5. ✅ Produce consistent results across different algorithms
-
-### Confidence Level
-**100% Mathematical Correctness** - All verification tests passed
-
-### Recommendation
-The prime algorithms are suitable for:
-- Educational purposes
-- Mathematical research
-- Cryptographic applications (with appropriate scaling)
-- Algorithm benchmarking
-
-**No mathematical errors detected.** The implementation correctly applies number theory principles to generate prime numbers.
-
----
-*Generated by Automated Verification System* 🚀
+The prime-number examples are mathematically correct for their documented ranges, and the verification process is reproducible directly from this release.

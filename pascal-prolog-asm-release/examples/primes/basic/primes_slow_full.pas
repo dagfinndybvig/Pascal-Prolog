@@ -6,7 +6,7 @@
 program primes_slow_full;
 
 var
-  i, j, is_prime, temp, is_divisible, count: integer;
+  i, j, is_prime, temp, is_divisible, count, rem1000, rem10000: integer;
 
 begin
   writeln('SLOW Prime Algorithm - Full Range Test (2 to 46225)');
@@ -16,10 +16,10 @@ begin
   writeln('- Uses repeated subtraction (no division)');
   writeln('- No square root optimization');
   writeln('- No skipping of even numbers');
-  writeln;
+  writeln('');
   writeln('WARNING: This will take a LONG time!');
   writeln('Testing up to 46225 (max safe limit)...');
-  writeln;
+  writeln('');
   
   count := 0;
   i := 2;
@@ -56,12 +56,14 @@ begin
       count := count + 1;
     
     { Show progress every 1000 numbers }
-    if i mod 1000 = 0 then
+    rem1000 := i - (i / 1000) * 1000;
+    if rem1000 = 0 then
     begin
       write('.');
-      if i mod 10000 = 0 then
+      rem10000 := i - (i / 10000) * 10000;
+      if rem10000 = 0 then
       begin
-        writeln;
+        writeln('');
         writeln('Reached ');
         write(i);
         writeln(' - still going...');
@@ -71,12 +73,12 @@ begin
     i := i + 1;
   end;
   
-  writeln;
-  writeln;
+  writeln('');
+  writeln('');
   writeln('Found ');
   write(count);
   writeln(' primes up to 46225');
-  writeln;
+  writeln('');
   writeln('Compare this to the optimized version which');
   writeln('finds the same result in seconds!');
 end.

@@ -6,7 +6,7 @@
 program primes_fast_full;
 
 var
-  i, j, is_prime, remainder, sqrt_approx, count: integer;
+  i, j, is_prime, remainder, sqrt_approx, count, rem1000, rem10000: integer;
 
 begin
   writeln('FAST Prime Algorithm - Full Range Test (2 to 46225)');
@@ -16,9 +16,9 @@ begin
   writeln('- Skips even numbers after 2');
   writeln('- Uses division for efficiency');
   writeln('- Early termination on first factor');
-  writeln;
+  writeln('');
   writeln('Testing up to 46225 (max safe limit)...');
-  writeln;
+  writeln('');
   
   count := 1; { Start with 2 }
   write('2 ');
@@ -55,12 +55,14 @@ begin
       count := count + 1;
     
     { Show progress every 1000 numbers }
-    if i mod 1000 = 0 then
+    rem1000 := i - (i / 1000) * 1000;
+    if rem1000 = 0 then
     begin
       write('.');
-      if i mod 10000 = 0 then
+      rem10000 := i - (i / 10000) * 10000;
+      if rem10000 = 0 then
       begin
-        writeln;
+        writeln('');
         writeln('Reached ');
         write(i);
         writeln(' - flying through...');
@@ -70,12 +72,12 @@ begin
     i := i + 2;
   end;
   
-  writeln;
-  writeln;
+  writeln('');
+  writeln('');
   writeln('Found ');
   write(count);
   writeln(' primes up to 46225');
-  writeln;
+  writeln('');
   writeln('This completed in seconds!');
   writeln('Compare to the slow version which takes much longer.');
 end.

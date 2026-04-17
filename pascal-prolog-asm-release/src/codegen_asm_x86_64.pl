@@ -38,9 +38,9 @@ string_counter(0).
 % Track if we need int_format
 :- dynamic needs_int_format/0.
 
-% Stack overflow protection configuration
+% Stack-frame safety configuration
 :- dynamic stack_guard_size/1.
-stack_guard_size(4096).  % 4KB guard page
+stack_guard_size(4096).  % Reserved size constant for stack safety checks
 
 % Register allocation state
 :- dynamic available_registers/1.

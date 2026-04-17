@@ -200,14 +200,14 @@ end;
 - Uses optimized square root approach
 - Continuous output with single spaces: `2 3 5 7 11 ...`
 - Fills terminal screen with primes
-- Summary at end: "Found 670 primes from 2 to 4999"
+- Summary at end: "Found these primes between 2 and 46000"
 
 **Programmatic Implementation:**
 ```pascal
 { Main loop }
 write('2 ');
 i := 3;
-while i <= 5000 do
+while i <= 46000 do
 begin
   { ... prime testing ... }
   if is_prime = 1 then
@@ -221,7 +221,7 @@ end;
 { Summary }
 writeln('');
 writeln('');
-writeln('Found 670 primes from 2 to 4999');
+writeln('Found these primes between 2 and 46000');
 ```
 
 **Perfect for demonstration and visualization**
